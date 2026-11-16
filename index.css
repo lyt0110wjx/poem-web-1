@@ -1,0 +1,275 @@
+body {
+	padding: 0;
+	width: 1200px;
+	margin: 0 auto;
+    /* 背景增加淡淡的水墨径向渐变，不再是单调纯色 */
+	background-color: rgba(229,237,226,1.00);
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(180,200,170,0.15) 0, transparent 35%),
+        radial-gradient(circle at 90% 80%, rgba(180,200,170,0.15) 0, transparent 35%);
+	color: #5D5D5D;
+}
+#contain {
+    width: 100%;
+    height: 715px;
+    position: relative;
+}
+#head_nav{
+	margin-top: 8px;
+	background-color: rgba(128,125,125,1.00);
+	border-radius: 8px;
+	margin-bottom: 8px;
+	width: 1200px;
+	height: 50px;
+    /*导航栏增加柔和阴影*/
+    box-shadow: 0 3px 8px rgba(80,80,80,0.2);
+}
+#contain1,#con_ind,#con_p,#contain3{
+	border: solid 1px #d4d4d4;
+	background-color: #ffffff;
+	border-radius: 8px;
+	padding-bottom: 20px;
+    /*新增：卡片阴影，悬浮效果，古风细描边*/
+    box-shadow: 0 4px 12px rgba(100,120,90,0.12);
+    transition: all 0.35s ease;
+}
+/*鼠标悬浮板块微微上浮*/
+#contain1:hover,#con_ind:hover,#con_p:hover,#contain3:hover{
+    transform: translateY(-4px);
+    box-shadow:0 8px 18px rgba(100,120,90,0.18);
+}
+#contain1 {
+	width:15%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	/* 【修复1】删掉固定height:300px，改为auto自动适配高度，容纳6个链接 */
+	height: auto;
+    /*左侧侧边栏增加顶部装饰*/
+    border-top:5px solid #749c74;
+}
+#contain2 {
+    width: 60%;
+    position: absolute;
+    top: 0;
+    left: 15%;
+    margin: 0 1%;	
+}
+#contain3 {
+	width: 23%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 745px;
+    border-top:5px solid #749c74;
+}
+#contain1 a{
+	margin: 0 auto;
+	padding: 16px 0;
+	display: block;
+	text-align: center;
+	color: #5d5d5d;
+	letter-spacing: 2px;
+	text-decoration: none;
+	border-bottom: dotted 1px #5D5D5D;
+    font-family:"KaiTi",楷体;
+    font-size:18px;
+    transition:0.3s;
+}
+#contain1 a:first-child{
+	padding-top: 15px;
+}
+#contain1 a:last-child{
+	border-bottom: none;
+	border-radius: 0 0 4px 4px;
+	padding-bottom: 5px;
+}
+#contain1 a:hover{
+	color:#ffffff;
+	background-color:#b5d19c;
+}
+#contain3 ul{
+	padding: 0;
+}
+#contain3 ul li {
+	width: 100%;
+	list-style-type: none;
+	display: inline-block;
+	text-indent: 1em;
+	margin: 5px auto;
+	border-bottom: dotted 1px #cccccc;
+		perspective: 300px;
+}
+#contain3 ul li a {
+	display: block;
+	text-decoration: none;
+	color: #666666;
+	font-size: 0.95em;
+	margin-bottom: 5px;
+    transition:0.3s;
+}
+#contain3 ul li a:hover {
+	color: #749c74;
+    padding-left:8px;
+}
+#con_ind a{
+	color: white;
+	text-decoration: none;
+	display: block;
+	width: 65px;
+	height: 25px;
+	position: absolute;
+	right: 2%;
+	font-weight: bold;
+	padding: 5px;
+	background-color: rgba(72,122,112,0.55);
+	border-radius: 8px;
+	top: 38%;
+    box-shadow:0 2px 6px rgba(72,122,112,0.3);
+    transition:0.3s;
+}
+#con_ind a:hover{
+    background:#3b665d;
+}
+#con_ind {
+    height: 300px;
+    margin-bottom: 10px;
+    border-top:5px solid #487A70;
+}
+#con_p {
+    height: 360px;
+}
+#con_p img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    padding:10px;
+}
+#index_foot .foot{
+    font-weight: bold;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+#index_foot {
+	width: 100%;
+	background-color: rgba(92,92,92,1.00);
+	border-radius: 5px;
+	height: 150px;
+	margin-top: 10px;
+    /*页脚渐变+装饰线*/
+    background:linear-gradient(180deg,#606060,#444444);
+    border-top:4px solid #87a887;
+}
+#index_foot p {
+    color: #E5EDE2;
+    text-align: center;
+}
+.foot {
+	padding-top: 10px;
+}
+.foot img {
+	height: 14px;
+	display: inline-block;
+	padding-left: 20px;
+	padding-right: 3px;
+}
+/*轮播图部分*/
+.banner {
+	position: relative;
+	width: 1200px;
+	height: 330px;
+	margin: 10px auto 0 auto;
+	overflow: hidden;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(90,110,80,0.2);
+    border:1px solid #c7d6c1;
+}
+.banner .banner_p{
+	position: absolute;
+	width: 7200px;
+	height: 330px;
+	z-index: 1;
+    transition: left 0.6s ease;
+}
+.banner .banner_p img{
+	float: left;
+	width: 1200px;
+	height: 330px;
+}
+.banner .banner_b {
+	position: absolute;
+	bottom: 20px;
+	width: 300px;
+	height: 20px;
+	z-index: 2;
+	/*【修复2】取消固定left，改为居中，6个圆点全部显示 */
+	left: 50%;
+	transform: translateX(-50%);
+}
+.banner a{
+		text-decoration: none;
+}
+.banner .banner_b span{
+	margin-left: 5px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background-color: #6CA1A0;
+	text-align: center;
+	color: white;
+	cursor: pointer;
+    transition:0.3s;
+}
+.banner .banner_b span.on{
+	background-color: #EEF5F7;
+	color: #6CA1A0;
+}
+.banner .arrow{
+	position: absolute;
+	top: 35%;
+	color: #fff;
+	background:rgba(72,122,112,0.55);
+	padding: 0px 14px;
+	border-radius: 50%;
+	font-size: 50px;
+	z-index: 2;
+	display: none;
+    transition:0.3s;
+}
+.banner .arrow_left{
+	left: 10px;
+}
+.banner .arrow_right{
+	right: 10px;
+}
+.banner:hover .arrow{
+	display: block;
+}
+.banner .arrow:hover{
+	background-color: rgba(72,122,112,0.85);
+}
+#contain2 #con_ind h3 {
+	color: #487A70;
+	text-indent: 1em;
+    font-family:"KaiTi",楷体;
+    font-size:22px;
+    letter-spacing:2px;
+}
+#contain2 #con_ind p {
+	text-indent: 2em;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+    line-height:1.8;
+    font-size:16px;
+}
+#con_p img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    padding: 0;
+    box-sizing: border-box;
+}

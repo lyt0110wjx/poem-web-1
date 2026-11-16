@@ -1,0 +1,1238 @@
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文光载道，诗韵留香</title>
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:"Microsoft Yahei",serif;
+}
+body{
+ position:relative;
+ z-index:3;
+}
+/* ========== 全屏背景图 ========== */
+.bg-image{
+ position:fixed;
+ left:0;
+ top:0;
+ width:100vw;
+ height:100vh;
+ background-image:url('01.jpg');
+ background-color:#2c261c;
+ background-size:cover;
+ background-position:center;
+ background-repeat:no-repeat;
+ z-index:1;
+}
+.bg-overlay{
+ position:fixed;
+ left:0;
+ top:0;
+ width:100vw;
+ height:100vh;
+ background:rgba(0,0,0,0.45);
+ z-index:2;
+}
+
+/* ========== 新导航栏样式 ========== */
+.nav{
+    width:100%;
+    height:60px;
+    background:#332c22;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    gap:30px;
+    position:relative;
+    z-index:10;
+}
+.nav-brand{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    flex-shrink:0;
+}
+.nav-logo{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    border:none;
+    overflow:hidden;
+}
+.nav .title{
+    color:#fff;
+    font-size:25px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex:1;
+    margin-left:370px;
+    overflow:hidden;
+}
+.nav a{
+    color:#fff;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:7px;
+    font-size:15px;
+    white-space:nowrap;
+}
+.nav a.active, .nav a:hover{
+    background:#d4b878;
+    color:#222;
+}
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-shrink:0;
+}
+.search-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.06);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    transition:all 0.25s ease;
+}
+.search-btn:hover{
+    background:#d4b878;
+    border-color:#d4b878;
+    color:#222;
+}
+.avatar-link{
+    display:block;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    overflow:hidden;
+    border:2px solid #d4b878;
+    flex-shrink:0;
+    background:#fff;
+    text-decoration:none;
+    position:relative;
+}
+.avatar-default{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    color:#332c22;
+    z-index:1;
+}
+.avatar-img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    z-index:2;
+}
+
+/* ========== 你原本的样式 ========== */
+.sub-nav{
+ width:100%;
+ background:rgba(51,44,34,0.75);
+ display:flex;
+ justify-content:center;
+ gap:24px;
+ padding:12px 0;
+ position:relative;
+ z-index:10;
+ flex-wrap:wrap;
+}
+.sub-nav a{
+ color:#fff;
+ text-decoration:none;
+ padding:7px 20px;
+ border-radius:6px;
+ font-size:15px;
+ min-width:110px;
+ text-align:center;
+}
+.sub-nav a.sub-active{
+ background:#d4b878;
+ color:#222;
+}
+.sub-nav a:hover{
+ background:#d4b878;
+ color:#222;
+}
+.container{
+ width:90%;
+ max-width:1200px;
+ margin:40px auto;
+ position:relative;
+ z-index:3;
+}
+.page-title{
+ text-align:center;
+ margin-bottom:30px;
+}
+.page-title h2{
+ font-size:34px;
+ color:#fff;
+ margin-bottom:10px;
+}
+.page-title p{
+ font-size:18px;
+ color:#eee;
+}
+.chat-wrap{
+ display:flex;
+ gap:30px;
+ background-image:url('2.jpg');
+ background-color:#42382b;
+ background-size:cover;
+ background-position:center;
+ background-repeat:no-repeat;
+ position:relative;
+ border-radius:12px;
+ box-shadow:0 12px 30px rgba(0,0,0,0.35);
+ transform: translateY(-4px);
+ padding:25px;
+}
+.chat-wrap::after{
+ content:"";
+ position:absolute;
+ left:0;
+ top:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.4);
+ border-radius:12px;
+ z-index:1;
+}
+
+.chat-left,.chat-right{
+ position:relative;
+ z-index:2;
+}
+.chat-left{
+ width:32%;
+}
+.chat-left .tip{
+ margin-top:16px;
+ line-height:1.7;
+ color:#fff;
+ font-size:16px;
+}
+.chat-right{
+ width:68%;
+ display:flex;
+ flex-direction:column;
+}
+.chat-box{
+ height:420px;
+ border:1px solid rgba(255,255,255,0.3);
+ border-radius:8px;
+ padding:20px;
+ overflow-y:auto;
+ background:rgba(252,250,246,0.85);
+ margin-bottom:20px;
+}
+.chat-box::-webkit-scrollbar {
+ width: 6px;
+}
+.chat-box::-webkit-scrollbar-track {
+ background: transparent;
+}
+.chat-box::-webkit-scrollbar-thumb {
+ background: #b9a88b;
+ border-radius: 3px;
+}
+.ai-msg,.user-msg{
+ max-width:80%;
+ margin-bottom:16px;
+ padding:12px 16px;
+ border-radius:10px;
+ line-height:1.6;
+ font-size:16px;
+ white-space:pre-line;
+}
+.ai-msg{
+ background:#e9dfce;
+ color:#333;
+ align-self:flex-start;
+}
+.user-msg{
+ background:#332c22;
+ color:#fff;
+ margin-left:auto;
+}
+.input-area{
+ display:flex;
+ gap:12px;
+ margin-bottom:10px;
+ flex-wrap:wrap;
+}
+#question{
+ flex:1;
+ padding:14px 16px;
+ border:1px solid #bbb;
+ border-radius:8px;
+ font-size:16px;
+ outline:none;
+}
+#sendBtn{
+ padding:14px 26px;
+ background:#332c22;
+ color:#fff;
+ border:none;
+ border-radius:8px;
+ font-size:16px;
+ cursor:pointer;
+}
+#sendBtn:hover{
+ background:#504738;
+}
+#sendBtn:disabled{
+ background:#777;
+ cursor:not-allowed;
+}
+#clearBtn{
+ padding:14px 20px;
+ background:#888;
+ color:#fff;
+ border:none;
+ border-radius:8px;
+ font-size:16px;
+ cursor:pointer;
+}
+#clearBtn:hover{
+ background:#666;
+}
+.loading-msg{
+ max-width:80%;
+ margin-bottom:16px;
+ padding:12px 16px;
+ border-radius:10px;
+ line-height:1.6;
+ font-size:16px;
+ background:#e9dfce;
+ color:#333;
+}
+.riddle-info{
+ background:#fff8ee;
+ border:1px solid #d8c8b4;
+ border-radius:10px;
+ padding:18px;
+ margin-bottom:16px;
+}
+.riddle-title{
+ font-size:18px;
+ margin-bottom:10px;
+ color:#703f28;
+}
+.riddle-text{
+ font-size:20px;
+ line-height:1.8;
+ padding:16px;
+ background:#ffffff;
+ border-radius:8px;
+}
+.pic-riddle-img{
+ width:100%;
+ max-width:360px;
+ border-radius:8px;
+ border:1px solid #d8c8b4;
+ margin:12px auto;
+ display:block;
+}
+.img-preview{
+ margin-top:16px;
+ text-align:center;
+ display:none;
+}
+.img-preview img{
+ max-width:280px;
+ border-radius:8px;
+ border:1px solid #d8c8b4;
+}
+.result-text{
+ font-size:18px;
+ margin:12px 0;
+ min-height:24px;
+}
+.right{
+ color:#3b7732;
+}
+.wrong{
+ color:#9b2c2c;
+}
+.mask{
+ position:fixed;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.4);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:999;
+}
+.pop-window{
+ width:460px;
+ background:#fff8ee;
+ padding:30px;
+ border-radius:14px;
+ border:2px solid #d8c8b4;
+ text-align:center;
+}
+.pop-window h2{
+ color:#3b7732;
+ margin-bottom:12px;
+ letter-spacing:3px;
+}
+.pop-img{
+ width:300px;
+ height:auto;
+ border-radius:10px;
+ border:1px solid #d8c8b4;
+ margin:10px 0 16px;
+}
+.pop-desc{
+ font-size:16px;
+ margin-bottom:22px;
+}
+.pop-btn-group{
+ display:flex;
+ gap:10px;
+ justify-content:center;
+ flex-wrap:wrap;
+}
+.pop-btn{
+ padding:9px 16px;
+ text-decoration:none;
+ border:none;
+ border-radius:7px;
+ font-size:15px;
+ cursor:pointer;
+}
+.btn-view{
+ background:#8b3b2c;
+ color:white;
+}
+.btn-next{
+ background:#3b7732;
+ color:white;
+}
+.btn-end{
+ background:#777;
+ color:white;
+}
+@media (max-width:768px){
+ .chat-wrap{
+ flex-direction:column;
+ }
+ .chat-left,.chat-right{
+ width:100%;
+ }
+ .nav{
+ height:auto;
+ padding:10px 0;
+ gap:8px;
+ }
+ .sub-nav{
+ gap:8px;
+ padding:10px 0;
+ }
+ .page-title h2{
+ font-size:26px;
+ }
+ .pop-window{
+ width:90%;
+ }
+}
+
+/* ========== 搜索弹窗样式 ========== */
+.search-mask{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.55);
+    z-index:9999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+.search-dialog{
+    width:620px;
+    background:#f8f3e8;
+    border-radius:14px;
+    padding:36px;
+    box-shadow:0 10px 35px rgba(0,0,0,0.25);
+    position:relative;
+    border:2px solid #b89b6b;
+    background-image: linear-gradient(rgba(232,222,206,0.25),rgba(232,222,206,0.25));
+}
+.search-dialog .tip-text{
+    font-size:20px;
+    color:#5c3f24;
+    margin-bottom:24px;
+    letter-spacing:2px;
+}
+.search-input{
+    width:100%;
+    height:52px;
+    border:2px solid #9c7d54;
+    border-radius:9px;
+    padding:0 18px;
+    font-size:17px;
+    outline:none;
+    background:#fffbf4;
+    color:#443322;
+}
+.search-input:focus{
+    border-color:#b89b6b;
+    box-shadow:0 0 0 3px rgba(184,155,107,0.22);
+}
+.search-tip-err{
+    color:#a83838;
+    font-size:15px;
+    margin-top:10px;
+    min-height:20px;
+}
+.suggest-panel{
+    position:absolute;
+    left:36px;
+    right:36px;
+    top:170px;
+    background:#fffbf4;
+    border:2px solid #9c7d54;
+    border-top:0;
+    border-radius:0 0 9px 9px;
+    box-shadow:0 6px 16px rgba(0,0,0,0.12);
+    z-index:100;
+    display:none;
+    max-height:320px;
+    overflow-y:auto;
+}
+.suggest-item{
+    display:flex;
+    align-items:center;
+    padding:13px 18px;
+    font-size:16px;
+    color:#5c3f24;
+    cursor:pointer;
+    gap:12px;
+}
+.suggest-item:hover{
+    background:#efe6d7;
+}
+.suggest-item .icon{
+    color:#9c7d54;
+}
+.suggest-empty{
+    padding:20px;
+    text-align:center;
+    color:#887052;
+    font-size:15px;
+}
+.search-btn-group{
+    display:flex;
+    justify-content:flex-end;
+    gap:18px;
+    margin-top:28px;
+}
+.confirm-btn{
+    width:106px;
+    height:46px;
+    background:#8c6b44;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+    letter-spacing:1px;
+}
+.cancel-btn{
+    width:106px;
+    height:46px;
+    background:#d9c9b3;
+    color:#443322;
+    border:none;
+    border-radius:8px;
+    font-size:17px;
+    cursor:pointer;
+    letter-spacing:1px;
+}
+.confirm-btn:hover{
+    background:#725636;
+}
+.cancel-btn:hover{
+    background:#c9b89f;
+}
+</style>
+</head>
+<body>
+
+<!--全屏背景+遮罩-->
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<!-- 新导航栏 -->
+<div class="nav">
+    <div class="nav-brand">
+        <img src="logo2.png" alt="Logo" class="nav-logo">
+        <div class="title">文光载道，诗韵留香</div>
+    </div>
+    <div class="nav-menu">
+        <a href="首页.html">首页</a>
+        <a href="诗词沿革.html">诗词沿革</a>
+        <a href="诗境寻踪.html">诗境寻踪</a>
+        <a href="翰墨诗库.html">翰墨诗库</a>
+        <a href="AI诗韵工坊.html" class="active">AI诗韵工坊</a>
+        <a href="诗词闯关.html">诗词闯关</a>
+        <a href="学习打卡.html">学习打卡</a>
+        <a href="关于本站.html">关于本站</a>
+    </div>
+    <div class="nav-right">
+        <button class="search-btn" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="21" y1="21" x2="16.8" y2="16.8"></line>
+            </svg>
+        </button>
+        <a href="主页.html" class="avatar-link" title="点击进入个人主页">
+            <span class="avatar-default" id="avatarDefault">👤</span>
+            <img class="avatar-img" id="avatarImg" alt="用户头像">
+        </a>
+    </div>
+</div>
+
+<!-- 子导航 -->
+<div class="sub-nav">
+ <a href="#" class="sub-active" data-target="chat">诗词问答</a>
+ <a href="#" data-target="riddle">诗谜竞猜</a>
+ <a href="#" data-target="picpoem">看图识名句</a>
+ <a href="AI诗会雅集.html">AI诗会雅集</a>
+</div>
+
+<div class="container">
+ <div class="page-title">
+ <h2>AI诗词问答</h2>
+ <p>在这里向AI提问，查询诗词释义、作者生平、赏析名句，也可以切换诗谜竞猜、看图识名句游玩</p>
+ </div>
+ <div class="chat-wrap">
+ <div class="chat-left">
+ <div class="tip">
+ <p>💡提问示例：</p>
+ <p>1. 介绍一下谢道韫</p>
+ <p>2. 赏析李清照声声慢</p>
+ <p>3. 未若柳絮因风起出自哪里</p>
+ <p>4. 陶渊明的代表作有哪些</p>
+ <p>5. 李白诗风是什么样的</p>
+ <br>
+ <p>🎮 上方子导航切换：诗词问答 / 诗谜竞猜 / 看图识名句 / AI诗会雅集</p>
+ </div>
+ </div>
+ <div class="chat-right">
+ <div class="chat-box" id="chatBox">
+ <div class="ai-msg">你好！我是诗词AI助手。你可以向我提问这六位文人：谢道韫、陶渊明、李白、杜甫、苏轼、李清照。你可以问作者生平、诗词赏析、名句出处。点击上方【诗谜竞猜】【看图识名句】开始游戏。</div>
+ </div>
+ <div class="input-area">
+ <input type="text" id="question" placeholder="输入诗词问题...">
+ <button id="sendBtn">发送</button>
+ <button id="clearBtn">清空对话</button>
+ </div>
+ </div>
+ </div>
+</div>
+
+<!-- 答对弹窗 -->
+<div class="mask" id="popMask">
+ <div class="pop-window">
+ <h2>🎉 恭喜你答对了！</h2>
+ <img class="pop-img" id="popImage" src="" alt="诗词配图" onerror="this.src='img/default.jpg'">
+ <div class="pop-desc" id="popDesc"></div>
+ <div class="pop-btn-group">
+ <a href="诗词赏析.html" class="pop-btn btn-view">前往诗词赏析</a>
+ <button class="pop-btn btn-next" id="goNext">继续下一题</button>
+ <button class="pop-btn btn-end" id="endGame">结束猜谜</button>
+ </div>
+ </div>
+</div>
+
+<script>
+ // ===================== AI诗词问答 JS =====================
+ const knowledgeBase = [
+ { keywords:["谢道韫","介绍谢道韫","谢道蕴"], type:"intro", answer:"谢道韫，东晋著名才女，出身名门谢氏。年少咏雪，留下千古名句「未若柳絮因风起」。\n她气质高雅，善于诗文，面对危难沉着刚毅，是古代才女的代表人物。" },
+ { keywords:["未若柳絮因风起","柳絮因风起","未若柳絮因风起出处"], type:"poem", answer:"「未若柳絮因风起」出自《世说新语·咏雪》，作者谢道韫。\n这句话用来比喻漫天飞雪，以柳絮喻白雪，意境轻盈优美，也让谢道韫千古留名。" },
+ { keywords:["陶渊明","陶潜","介绍陶渊明"], type:"intro", answer:"陶渊明，东晋末期田园诗开山鼻祖，又名陶潜。\n他厌恶官场束缚，辞官归隐田园，热爱自然，淡泊宁静。擅长写田园风光、隐逸情怀。代表作《桃花源记》《饮酒·其五》《归园田居》。" },
+ { keywords:["饮酒其五","采菊东篱下","采菊东篱","饮酒其五是谁写的"], type:"poem", answer:"《饮酒·其五》陶渊明\n结庐在人境，而无车马喧。\n问君何能尔？心远地自偏。\n采菊东篱下，悠然见南山。\n山气日夕佳，飞鸟相与还。\n此中有真意，欲辨已忘言。\n赏析：这首诗写归隐之后悠然自在的心境，远离世俗喧嚣，体会自然之中的人生真谛。" },
+ { keywords:["李白","诗仙","介绍李白"], type:"intro", answer:"李白，唐代浪漫主义诗人，人称诗仙。\n性格豪迈洒脱，游历四方，诗风奔放飘逸，想象瑰丽。\n代表作《将进酒》《蜀道难》《行路难》《静夜思》。" },
+ { keywords:["长风破浪会有时","行路难","行路难作者"], type:"poem", answer:"「长风破浪会有时，直挂云帆济沧海」出自李白《行路难·其一》。\n含义：尽管前路艰难，但相信理想终会实现，充满乐观不屈的力量。" },
+ { keywords:["杜甫","诗圣","介绍杜甫"], type:"intro", answer:"杜甫，唐代现实主义诗人，后世尊称为诗圣。\n他的诗歌记录时代苦难，沉郁顿挫，心系百姓家国，作品被称为诗史。代表作《春望》《登高》《茅屋为秋风所破歌》。" },
+ { keywords:["苏轼","苏东坡","介绍苏轼"], type:"intro", answer:"苏轼，北宋大文豪，号东坡居士。\n一生屡遭贬谪，但性格旷达乐观。诗词、书法、绘画样样精通。\n代表作《水调歌头·明月几时有》《念奴娇赤壁怀古》《定风波》。" },
+ { keywords:["但愿人长久","水调歌头","水调歌头作者"], type:"poem", answer:"「但愿人长久，千里共婵娟」出自苏轼《水调歌头·明月几时有》。\n婵娟指代明月。意思：愿世间所有人平安长久，即使相隔千里，也可以共赏同一轮明月。" },
+ { keywords:["李清照","易安","介绍李清照"], type:"intro", answer:"李清照，宋代婉约派词人，号易安居士，千古第一才女。\n前期生活安逸，词风清新明快；南渡之后国破家亡，词作满是孤寂悲愁。代表作《声声慢》《醉花阴》《一剪梅》。" },
+ { keywords:["声声慢","寻寻觅觅","声声慢是谁写的","声声慢作者"], type:"poem", answer:"《声声慢》 李清照\n寻寻觅觅，冷冷清清，凄凄惨惨戚戚。\n乍暖还寒时候，最难将息。\n三杯两盏淡酒，怎敌他、晚来风急！\n雁过也，正伤心，却是旧时相识。\n赏析：开篇连用十四个叠字，写尽国破家亡之后孤独凄苦的心境，是婉约词千古名篇。" },
+ { keywords:["醉花阴","人比黄花瘦","醉花阴作者"], type:"poem", answer:"「莫道不销魂，帘卷西风，人比黄花瘦」出自李清照《醉花阴》。\n以菊花自比，写离别相思，相思愁苦，人憔悴消瘦。" }
+ ]
+ //DOM元素 问答
+ const chatBox = document.getElementById('chatBox');
+ const questionInput = document.getElementById('question');
+ const sendBtn = document.getElementById('sendBtn');
+ const clearBtn = document.getElementById('clearBtn');
+ // 子导航切换
+ const subNavLinks = document.querySelectorAll(".sub-nav a");
+ // 模式：chat / riddle / picpoem
+ let mode = "chat";
+ let currentIndex = 0;
+ let gameOver = false;
+ // 诗谜相关DOM和变量
+ const popMask = document.getElementById("popMask");
+ const popImage = document.getElementById("popImage");
+ const popDesc = document.getElementById("popDesc");
+ const goNext = document.getElementById("goNext");
+ const endGame = document.getElementById("endGame");
+ //诗谜题库
+ const riddleList = [
+ { riddle:"飞流直下三千尺，疑是银河落九天。猜猜这是李白哪一首名篇？", answer:"望庐山瀑布", img:"望庐山瀑布.jpg", link:"诗词赏析.html", popText:"此诗乃是李白《望庐山瀑布》，写庐山瀑布雄奇壮阔的美景。" },
+ { riddle:"国破山河在，城春草木深。猜猜这是杜甫哪一首名篇？", answer:"春望", img:"春望.jpg", link:"诗词赏析.html", popText:"此诗乃是杜甫《春望》，饱含诗人忧国忧民的深沉情怀。" },
+ { riddle:"大江东去，浪淘尽，千古风流人物。猜猜这是苏轼哪一首名篇？", answer:"念奴娇赤壁怀古", img:"念奴娇赤壁怀古.jpg", link:"诗词赏析.html", popText:"此词乃是苏轼《念奴娇·赤壁怀古》，怀古伤今，大气磅礴。" },
+ { riddle:"乱花渐欲迷人眼，浅草才能没马蹄。猜猜这是白居易哪一首名篇？", answer:"钱塘湖春行", img:"钱塘湖春行.jpg", link:"诗词赏析.html", popText:"此诗乃是白居易《钱塘湖春行》，描绘西湖早春明媚风光。" },
+ { riddle:"寻寻觅觅，冷冷清清，凄凄惨惨戚戚。猜猜这是李清照哪一首名篇？", answer:"声声慢", img:"声声慢.jpg", link:"诗词赏析.html", popText:"此词乃是李清照《声声慢》，道尽词人国破家亡后的满腹愁绪。" },
+ { riddle:"未若柳絮因风起，是哪位才女咏雪的名句？写出这首咏雪相关的典故名称", answer:"咏雪", img:"咏雪.jpg", link:"诗词赏析.html", popText:"此句出自谢道韫咏雪典故，一句柳絮因风起，尽显才女风雅。" }
+ ];
+ // ========== 看图识名句题库 ==========
+ const picRiddleList = [
+ { pic:"水调歌头.jpg", answer:"但愿人长久千里共婵娟", popText:"出自苏轼《水调歌头·明月几时有》，愿相隔千里之人，共赏一轮明月。" },
+ { pic:"行路难.jpg", answer:"长风破浪会有时直挂云帆济沧海", popText:"李白《行路难》名句，表达不畏艰难，坚信理想终会实现的豪情。" },
+ { pic:"醉花阴.jpg", answer:"莫道不销魂帘卷西风人比黄花瘦", popText:"李清照《醉花阴》名句，秋风黄花，写尽相思憔悴。" },
+ { pic:"春望.jpg", answer:"国破山河在城春草木深", popText:"杜甫《春望》名句，国都残破，草木丛生，满含忧国之痛。" }
+ ];
+ //打字机效果函数
+ function typeWrite(element, text, speed=30){
+ let i = 0;
+ element.innerText = "";
+ function typing(){
+ if(i < text.length){
+ element.innerText += text.charAt(i);
+ i++;
+ chatBox.scrollTop = chatBox.scrollHeight;
+ setTimeout(typing, speed);
+ }
+ }
+ typing();
+ }
+ //新增消息
+ function addUserMsg(text){
+ let div = document.createElement('div');
+ div.className = "user-msg";
+ div.innerText = text;
+ chatBox.appendChild(div);
+ chatBox.scrollTop = chatBox.scrollHeight;
+ }
+ function addAiMsg(text){
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ chatBox.appendChild(div);
+ typeWrite(div, text);
+ }
+ //渲染诗谜
+ function renderRiddleToChat(){
+ const item = riddleList[currentIndex];
+ let riddleHtml = `<div class="riddle-info">
+ <div class="riddle-title">📜 本次诗谜谜面：</div>
+ <div class="riddle-text">${item.riddle}</div>
+ <div class="img-preview">
+ <img src="${item.img}" alt="配图" onerror="this.style.display='none'">
+ <div class="tip-link">谜底：${item.answer}</div>
+ </div>
+ <div class="result-text"></div>
+ </div>`;
+ chatBox.innerHTML += riddleHtml;
+ chatBox.scrollTop = chatBox.scrollHeight;
+ }
+ //渲染看图识名句
+ function renderPicRiddle(){
+ const item = picRiddleList[currentIndex];
+ let html = `
+ <div class="riddle-info">
+ <div class="riddle-title">🖼️ 看图识名句</div>
+ <img class="pic-riddle-img" src="${item.pic}" alt="诗词配图" onerror="this.style.display='none'">
+ <div class="result-text"></div>
+ </div>`;
+ chatBox.innerHTML += html;
+ chatBox.scrollTop = chatBox.scrollHeight;
+ }
+ //关闭弹窗
+ function closePop(){
+ popMask.style.display = "none";
+ }
+ //下一题弹窗按钮
+ goNext.onclick = ()=>{
+ closePop();
+ if(mode === "riddle"){
+ if(currentIndex < riddleList.length -1){
+ currentIndex++;
+ renderRiddleToChat();
+ }else{
+ alert("🎉全部诗谜答完！游戏结束");
+ gameOver = true;
+ sendBtn.disabled = true;
+ }
+ }else if(mode === "picpoem"){
+ if(currentIndex < picRiddleList.length -1){
+ currentIndex++;
+ renderPicRiddle();
+ }else{
+ alert("🎉全部看图识名句题目答完！游戏结束");
+ gameOver = true;
+ sendBtn.disabled = true;
+ }
+ }
+ }
+ endGame.onclick = ()=>{
+ closePop();
+ gameOver = true;
+ sendBtn.disabled = true;
+ addAiMsg("游戏结束。");
+ }
+ // 子导航点击切换逻辑
+ subNavLinks.forEach(link=>{
+ link.onclick = function(e){
+ if(this.getAttribute("href") !== "#"){
+ return;
+ }
+ e.preventDefault();
+ subNavLinks.forEach(a=>a.classList.remove("sub-active"));
+ this.classList.add("sub-active");
+ const target = this.dataset.target;
+ mode = target;
+ chatBox.innerHTML = "";
+ gameOver = false;
+ sendBtn.disabled = false;
+ currentIndex = 0;
+ if(target === "chat"){
+ questionInput.placeholder = "输入诗词问题...";
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "你好！我是诗词AI助手。你可以向我提问这六位文人：谢道韫、陶渊明、李白、杜甫、苏轼、李清照。你可以问作者生平、诗词赏析、名句出处。";
+ chatBox.appendChild(div);
+ }else if(target === "riddle"){
+ questionInput.placeholder = "输入谜底答案...";
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "🎮 诗谜竞猜已开启！输入你的答案，猜猜诗词名篇。";
+ chatBox.appendChild(div);
+ renderRiddleToChat();
+ }else if(target === "picpoem"){
+ questionInput.placeholder = "写出图中的诗词名句...";
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "🖼️ 看图识名句！观察图片，输入对应的诗词名句。";
+ chatBox.appendChild(div);
+ renderPicRiddle();
+ }
+ }
+ })
+ //答案标准化处理：去除空格、标点、转小写
+ function normalizeStr(str){
+ return str.replace(/[，。！？\s]/g,"").toLowerCase();
+ }
+ //智能匹配核心函数（普通问答）
+ function getAnswer(userQ){
+ let q = userQ.toLowerCase();
+ q = q.replace(/谁写的|作者是谁|介绍一下|简述|说说|是什么|出自哪首|这首诗/g,"");
+ let matchItem = null;
+ let maxMatchCount = 0;
+ for(let item of knowledgeBase){
+ let count = 0;
+ for(let kw of item.keywords){
+ if(q.includes(kw.toLowerCase())){
+ count++;
+ }
+ }
+ if(count > maxMatchCount){
+ maxMatchCount = count;
+ matchItem = item;
+ }
+ }
+ if(maxMatchCount>0){
+ return matchItem.answer;
+ }else{
+ return "我暂时无法识别这个问题。\n你可以试试：\n1. 查询六位文人的生平：谢道韫、陶渊明、李白、杜甫、苏轼、李清照\n2. 查询名句出处，例如：寻寻觅觅是哪首词\n3. 查询诗词赏析";
+ }
+ }
+ //发送点击事件【区分三种模式】
+ sendBtn.onclick = function(){
+ if(gameOver){
+ return;
+ }
+ let q = questionInput.value.trim();
+ if(!q) return;
+ addUserMsg(q);
+ questionInput.value="";
+ sendBtn.disabled = true;
+ if(mode === "riddle"){
+ const item = riddleList[currentIndex];
+ const userAns = normalizeStr(q);
+ const trueAns = normalizeStr(item.answer);
+ setTimeout(()=>{
+ if(userAns === trueAns){
+ addAiMsg("🎉 答对啦！");
+ popImage.src = item.img;
+ popDesc.innerText = item.popText;
+ popMask.style.display = "flex";
+ }else{
+ addAiMsg("❌ 答错了，可以再想想。");
+ }
+ sendBtn.disabled = false;
+ },400);
+ }else if(mode === "picpoem"){
+ const item = picRiddleList[currentIndex];
+ const userAns = normalizeStr(q);
+ const trueAns = normalizeStr(item.answer);
+ setTimeout(()=>{
+ if(userAns === trueAns){
+ addAiMsg("🎉 答对啦！");
+ popImage.src = item.pic;
+ popDesc.innerText = item.popText;
+ popMask.style.display = "flex";
+ }else{
+ addAiMsg("❌ 答错了，可以再想想。");
+ }
+ sendBtn.disabled = false;
+ },400);
+ }else{
+ setTimeout(()=>{
+ let ans = getAnswer(q);
+ addAiMsg(ans);
+ sendBtn.disabled = false;
+ },400);
+ }
+ }
+ //回车发送
+ questionInput.onkeydown = function(e){
+ if(e.key === "Enter") sendBtn.click();
+ }
+ //清空对话
+ clearBtn.onclick = function(){
+ chatBox.innerHTML = "";
+ gameOver = false;
+ sendBtn.disabled = false;
+ if(mode === "chat"){
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "你好！我是诗词AI助手。你可以向我提问这六位文人：谢道韫、陶渊明、李白、杜甫、苏轼、李清照。你可以问作者生平、诗词赏析、名句出处。";
+ chatBox.appendChild(div);
+ }else if(mode === "riddle"){
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "🎮 已清空对话，继续当前诗谜竞猜。";
+ chatBox.appendChild(div);
+ renderRiddleToChat();
+ }else if(mode === "picpoem"){
+ let div = document.createElement('div');
+ div.className = "ai-msg";
+ div.innerText = "🖼️ 已清空对话，继续看图识名句。";
+ chatBox.appendChild(div);
+ renderPicRiddle();
+ }
+ }
+</script>
+
+<!-- 搜索弹窗 HTML -->
+<div class="search-mask" id="searchMask">
+    <div class="search-dialog">
+        <div class="tip-text">请输入诗词、作者或标题进行搜索：</div>
+        <input type="text" class="search-input" id="searchInput" placeholder="例如：李白、静夜思">
+        <div class="search-tip-err" id="errTip"></div>
+        <div class="suggest-panel" id="suggestPanel"></div>
+        <div class="search-btn-group">
+            <button class="confirm-btn" id="searchConfirm">确定</button>
+            <button class="cancel-btn" id="searchCancel">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 搜索弹窗逻辑 -->
+<script>
+const searchBtn = document.querySelector('.search-btn');
+const searchMask = document.getElementById('searchMask');
+const searchInput = document.getElementById('searchInput');
+const searchConfirm = document.getElementById('searchConfirm');
+const searchCancel = document.getElementById('searchCancel');
+const suggestPanel = document.getElementById('suggestPanel');
+const errTip = document.getElementById('errTip');
+
+const searchData = [
+  {type:"poem",name:"山坡羊·潼关怀古",searchText:"山坡羊潼关怀古 峰峦如聚 伤心秦汉经行处",link:"张养浩精选作品.html"},
+  {type:"poem",name:"山坡羊·骊山怀古",searchText:"山坡羊骊山怀古",link:"张养浩精选作品.html"},
+  {type:"poem",name:"水仙子",searchText:"水仙子",link:"张养浩精选作品.html"},
+  {type:"poet",name:"张养浩",searchText:"张养浩",link:"张养浩.html"},
+  {type:"poem",name:"西厢记",searchText:"西厢记 碧云天 总是离人泪",link:"王实甫精选作品.html"},
+  {type:"poem",name:"丽春堂",searchText:"丽春堂",link:"王实甫精选作品.html"},
+  {type:"poem",name:"破窑记",searchText:"破窑记",link:"王实甫精选作品.html"},
+  {type:"poet",name:"王实甫",searchText:"王实甫",link:"王实甫.html"},
+  {type:"poem",name:"倩女离魂",searchText:"倩女离魂",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"王粲登楼",searchText:"王粲登楼",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"㑇梅香",searchText:"㑇梅香",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"周公摄政",searchText:"周公摄政",link:"郑光祖精选作品.html"},
+  {type:"poet",name:"郑光祖",searchText:"郑光祖",link:"郑光祖.html"},
+  {type:"poem",name:"天净沙·秋思",searchText:"天净沙秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"汉宫秋",searchText:"汉宫秋",link:"马致远精选作品.html"},
+  {type:"poem",name:"双调夜行船·秋思",searchText:"双调夜行船秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"寿阳曲·江天暮雪",searchText:"寿阳曲江天暮雪",link:"马致远精选作品.html"},
+  {type:"poet",name:"马致远",searchText:"马致远",link:"马致远.html"},
+  {type:"poem",name:"窦娥冤",searchText:"窦娥冤",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"单刀会",searchText:"单刀会",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"救风尘",searchText:"救风尘",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"南吕一枝花·不服老",searchText:"南吕一枝花不服老",link:"关汉卿精选作品.html"},
+  {type:"poet",name:"关汉卿",searchText:"关汉卿",link:"关汉卿.html"},
+  {type:"poem",name:"醉翁亭记",searchText:"醉翁亭记",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"蝶恋花·庭院深深深几许",searchText:"蝶恋花 庭院深深深几许",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"生查子·元夕",searchText:"生查子元夕",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"浪淘沙·把酒祝东风",searchText:"浪淘沙把酒祝东风",link:"欧阳修精选作品.html"},
+  {type:"poet",name:"欧阳修",searchText:"欧阳修",link:"欧阳修.html"},
+  {type:"poem",name:"示儿",searchText:"示儿",link:"陆游精选作品.html"},
+  {type:"poem",name:"游山西村",searchText:"游山西村",link:"陆游精选作品.html"},
+  {type:"poem",name:"书愤",searchText:"书愤",link:"陆游精选作品.html"},
+  {type:"poem",name:"钗头凤·红酥手",searchText:"钗头凤红酥手",link:"陆游精选作品.html"},
+  {type:"poet",name:"陆游",searchText:"陆游",link:"陆游.html"},
+  {type:"poem",name:"雨霖铃·寒蝉凄切",searchText:"雨霖铃寒蝉凄切",link:"柳永精选作品.html"},
+  {type:"poem",name:"蝶恋花·伫倚危楼风细细",searchText:"蝶恋花伫倚危楼风细细",link:"柳永精选作品.html"},
+  {type:"poem",name:"八声甘州·对潇潇暮雨洒江天",searchText:"八声甘州对潇潇暮雨洒江天",link:"柳永精选作品.html"},
+  {type:"poem",name:"望海潮·东南形胜",searchText:"望海潮东南形胜",link:"柳永精选作品.html"},
+  {type:"poet",name:"柳永",searchText:"柳永",link:"柳永.html"},
+  {type:"poem",name:"醉花阴·薄雾浓云愁永昼",searchText:"醉花阴薄雾浓云愁永昼",link:"poem.html"},
+  {type:"poem",name:"声声慢·寻寻觅觅",searchText:"声声慢寻寻觅觅",link:"poem.html"},
+  {type:"poem",name:"一剪梅·红藕香残玉簟秋",searchText:"一剪梅红藕香残玉簟秋",link:"poem.html"},
+  {type:"poem",name:"夏日绝句",searchText:"夏日绝句",link:"poem.html"},
+  {type:"poet",name:"李清照",searchText:"李清照",link:"李清照.html"},
+  {type:"poem",name:"破阵子·为陈同甫赋壮词以寄之",searchText:"破阵子为陈同甫赋壮词以寄之",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"青玉案·元夕",searchText:"青玉案元夕",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"永遇乐·京口北固亭怀古",searchText:"永遇乐京口北固亭怀古",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"南乡子·登京口北固亭有怀",searchText:"南乡子登京口北固亭有怀",link:"辛弃疾精选作品.html"},
+  {type:"poet",name:"辛弃疾",searchText:"辛弃疾",link:"辛弃疾.html"},
+  {type:"poem",name:"念奴娇·赤壁怀古",searchText:"念奴娇赤壁怀古",link:"su_poem.html"},
+  {type:"poem",name:"水调歌头·明月几时有",searchText:"水调歌头明月几时有",link:"su_poem.html"},
+  {type:"poem",name:"定风波·莫听穿林打叶声",searchText:"定风波莫听穿林打叶声",link:"su_poem.html"},
+  {type:"poem",name:"江城子·乙卯正月二十日夜记梦",searchText:"江城子乙卯正月二十日夜记梦",link:"su_poem.html"},
+  {type:"poet",name:"苏轼",searchText:"苏轼",link:"苏轼.html"},
+  {type:"poem",name:"无题·相见时难别亦难",searchText:"无题相见时难别亦难",link:"李商隐精选作品.html"},
+  {type:"poem",name:"锦瑟",searchText:"锦瑟",link:"李商隐精选作品.html"},
+  {type:"poem",name:"夜雨寄北",searchText:"夜雨寄北",link:"李商隐精选作品.html"},
+  {type:"poem",name:"登乐游原",searchText:"登乐游原",link:"李商隐精选作品.html"},
+  {type:"poet",name:"李商隐",searchText:"李商隐",link:"李商隐.html"},
+  {type:"poem",name:"师说",searchText:"师说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"马说",searchText:"马说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"左迁至蓝关示侄孙湘",searchText:"左迁至蓝关示侄孙湘",link:"韩愈精选作品.html"},
+  {type:"poem",name:"进学解",searchText:"进学解",link:"韩愈精选作品.html"},
+  {type:"poet",name:"韩愈",searchText:"韩愈",link:"韩愈.html"},
+  {type:"poem",name:"琵琶行",searchText:"琵琶行",link:"bai_s.html"},
+  {type:"poem",name:"长恨歌",searchText:"长恨歌",link:"bai_s.html"},
+  {type:"poem",name:"钱塘湖春行",searchText:"钱塘湖春行",link:"bai_s.html"},
+  {type:"poet",name:"白居易",searchText:"白居易",link:"白居易.html"},
+  {type:"poem",name:"山居秋暝",searchText:"山居秋暝",link:"王维精选作品.html"},
+  {type:"poem",name:"使至塞上",searchText:"使至塞上",link:"王维精选作品.html"},
+  {type:"poem",name:"鸟鸣涧",searchText:"鸟鸣涧",link:"王维精选作品.html"},
+  {type:"poem",name:"鹿柴",searchText:"鹿柴",link:"王维精选作品.html"},
+  {type:"poet",name:"王维",searchText:"王维",link:"王维.html"},
+  {type:"poem",name:"登高",searchText:"登高",link:"du_s.html"},
+  {type:"poem",name:"春望",searchText:"春望",link:"du_s.html"},
+  {type:"poem",name:"茅屋为秋风所破歌",searchText:"茅屋为秋风所破歌",link:"du_s.html"},
+  {type:"poet",name:"杜甫",searchText:"杜甫",link:"杜甫.html"},
+  {type:"poem",name:"将进酒",searchText:"将进酒",link:"libai_s.html"},
+  {type:"poem",name:"行路难·其一",searchText:"行路难其一",link:"libai_s.html"},
+  {type:"poem",name:"渡荆门送别",searchText:"渡荆门送别",link:"libai_s.html"},
+  {type:"poet",name:"李白",searchText:"李白",link:"李白.html"},
+  {type:"poem",name:"泰山吟",searchText:"泰山吟",link:"xie_s.html"},
+  {type:"poem",name:"拟嵇中散咏松诗",searchText:"拟嵇中散咏松诗",link:"xie_s.html"},
+  {type:"poem",name:"登池上楼",searchText:"登池上楼",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"石壁精舍还湖中作",searchText:"石壁精舍还湖中作",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"入彭蠡湖口",searchText:"入彭蠡湖口",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"山居赋",searchText:"山居赋",link:"谢灵运精选作品.html"},
+  {type:"poet",name:"谢灵运",searchText:"谢灵运",link:"谢灵运.html"},
+  {type:"poem",name:"饮酒·其五",searchText:"饮酒其五",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归园田居·其一",searchText:"归园田居其一",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归去来兮辞",searchText:"归去来兮辞",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"杂诗",searchText:"杂诗",link:"陶渊明精选作品.html"},
+  {type:"poet",name:"陶渊明",searchText:"陶渊明",link:"陶渊明.html"},
+  {type:"poem",name:"白马篇",searchText:"白马篇",link:"曹植精选作品.html"},
+  {type:"poem",name:"洛神赋",searchText:"洛神赋",link:"曹植精选作品.html"},
+  {type:"poem",name:"七步诗",searchText:"七步诗",link:"曹植精选作品.html"},
+  {type:"poem",name:"七哀诗",searchText:"七哀诗",link:"曹植精选作品.html"},
+  {type:"poet",name:"曹植",searchText:"曹植",link:"曹植.html"},
+  {type:"poem",name:"燕歌行",searchText:"燕歌行",link:"曹丕精选作品.html"},
+  {type:"poem",name:"典论·论文",searchText:"典论论文",link:"曹丕精选作品.html"},
+  {type:"poem",name:"杂诗二首·其一",searchText:"杂诗二首其一",link:"曹丕精选作品.html"},
+  {type:"poem",name:"善哉行",searchText:"善哉行",link:"曹丕精选作品.html"},
+  {type:"poet",name:"曹丕",searchText:"曹丕",link:"曹丕.html"},
+  {type:"poem",name:"离骚",searchText:"离骚",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·湘夫人",searchText:"九歌湘夫人",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·国殇",searchText:"九歌国殇",link:"屈原精选作品.html"},
+  {type:"poem",name:"九章·橘颂",searchText:"九章橘颂",link:"屈原精选作品.html"},
+  {type:"poet",name:"屈原",searchText:"屈原",link:"屈原.html"},
+  {type:"poem",name:"论语·学而",searchText:"论语学而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·为政",searchText:"论语为政",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·述而",searchText:"论语述而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·颜渊",searchText:"论语颜渊",link:"孔子精选作品.html"},
+  {type:"poem",name:"孟子·公孙丑上",searchText:"孟子公孙丑上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·告子上",searchText:"孟子告子上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·离娄上",searchText:"孟子离娄上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·尽心下",searchText:"孟子尽心下",link:"孟子精选作品.html"},
+  {type:"poem",name:"史记·陈涉世家",searchText:"史记陈涉世家",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·项羽本纪",searchText:"史记项羽本纪",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·太史公自序",searchText:"史记太史公自序",link:"司马迁精选作品.html"},
+  {type:"poet",name:"司马迁",searchText:"司马迁",link:"司马迁.html"},
+  {type:"poem",name:"荀子·天论",searchText:"荀子天论",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·性恶",searchText:"荀子性恶",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·劝学",searchText:"荀子劝学",link:"荀子精选作品.html"},
+  {type:"poet",name:"荀子",searchText:"荀子",link:"荀子.html"},
+  {type:"poem",name:"过秦论",searchText:"过秦论",link:"贾谊精选作品.html"},
+  {type:"poem",name:"鵩鸟赋",searchText:"鵩鸟赋",link:"贾谊精选作品.html"},
+  {type:"poem",name:"惜誓",searchText:"惜誓",link:"贾谊精选作品.html"},
+  {type:"poem",name:"治安策",searchText:"治安策",link:"贾谊精选作品.html"},
+  {type:"poet",name:"贾谊",searchText:"贾谊",link:"贾谊.html"},
+  {type:"poem",name:"子虚赋",searchText:"子虚赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"上林赋",searchText:"上林赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"凤求凰",searchText:"凤求凰",link:"司马相如精选作品.html"},
+  {type:"poet",name:"司马相如",searchText:"司马相如",link:"司马相如.html"},
+  {type:"poem",name:"长门赋",searchText:"长门赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"报任安书",searchText:"报任安书",link:"司马迁精选作品.html"},
+  {type:"poem",name:"二京赋",searchText:"二京赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"归田赋",searchText:"归田赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"灵宪",searchText:"灵宪",link:"张衡精选作品.html"},
+  {type:"poet",name:"张衡",searchText:"张衡",link:"张衡.html"},
+  {type:"poem",name:"四愁诗",searchText:"四愁诗",link:"张衡精选作品.html"},
+  {type:"poem",name:"两都赋",searchText:"两都赋",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·司马迁传",searchText:"汉书司马迁传",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·董仲舒传",searchText:"汉书董仲舒传",link:"班固精选作品.html"},
+  {type:"poet",name:"班固",searchText:"班固",link:"班固.html"},
+  {type:"poem",name:"咏史",searchText:"咏史",link:"班固精选作品.html"},
+  {type:"poem",name:"解嘲",searchText:"解嘲",link:"扬雄精选作品.html"},
+  {type:"poem",name:"太玄经",searchText:"太玄经",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·吾子",searchText:"法言吾子",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·学行",searchText:"法言学行",link:"扬雄精选作品.html"},
+  {type:"poet",name:"扬雄",searchText:"扬雄",link:"扬雄.html"},
+  {type:"poem",name:"蒿里行",searchText:"蒿里行",link:"曹操精选作品.html"},
+  {type:"poem",name:"短歌行",searchText:"短歌行",link:"曹操精选作品.html"},
+  {type:"poem",name:"龟虽寿",searchText:"龟虽寿",link:"曹操精选作品.html"},
+  {type:"poem",name:"观沧海",searchText:"观沧海",link:"曹操精选作品.html"},
+  {type:"poet",name:"曹操",searchText:"曹操",link:"曹操.html"},
+  {type:"dynasty",name:"先秦",searchText:"先秦",link:"翰墨诗库.html?key=先秦"},
+  {type:"dynasty",name:"汉代",searchText:"汉代",link:"翰墨诗库.html?key=汉代"},
+  {type:"dynasty",name:"魏晋南北朝",searchText:"魏晋南北朝",link:"翰墨诗库.html?key=魏晋南北朝"},
+  {type:"dynasty",name:"唐朝",searchText:"唐朝",link:"翰墨诗库.html?key=唐朝"},
+  {type:"dynasty",name:"宋朝",searchText:"宋朝",link:"翰墨诗库.html?key=宋朝"},
+  {type:"dynasty",name:"元朝",searchText:"元朝",link:"翰墨诗库.html?key=元朝"}
+];
+
+function getSuggestList(keyword){
+  if(!keyword.trim()) return [];
+  const kw = keyword.trim().toLowerCase();
+  const matchAll = searchData.filter(item=> 
+    item.name.toLowerCase().includes(kw) || item.searchText.toLowerCase().includes(kw)
+  );
+  const poetList = matchAll.filter(i=>i.type==="poet");
+  const poemList = matchAll.filter(i=>i.type==="poem");
+  const dynastyList = matchAll.filter(i=>i.type==="dynasty");
+  return [...poetList,...poemList,...dynastyList];
+}
+
+function renderSuggest(list){
+  if(list.length ===0){
+    suggestPanel.innerHTML = `<div class="suggest-empty">无相关结果</div>`;
+  }else{
+    suggestPanel.innerHTML = list.map(item=>`
+      <div class="suggest-item" data-link="${item.link}">
+        <span class="icon">🔍</span>
+        <span>${item.name}</span>
+      </div>
+    `).join("");
+    document.querySelectorAll(".suggest-item").forEach(el=>{
+      el.onclick = ()=>{
+        location.href = el.dataset.link;
+      }
+    })
+  }
+  suggestPanel.style.display = "block";
+}
+
+searchBtn.onclick = function(){
+    searchMask.style.display = 'flex';
+    searchInput.value = '';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+    searchInput.focus();
+}
+function closeSearchDialog(){
+    searchMask.style.display = 'none';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+}
+searchCancel.onclick = closeSearchDialog;
+searchMask.onclick = function(e){
+    if(e.target === searchMask) closeSearchDialog();
+}
+searchInput.oninput = function(){
+    errTip.innerText = "";
+    const kw = this.value;
+    if(!kw.trim()){
+        suggestPanel.style.display="none";
+        return;
+    }
+    const res = getSuggestList(kw);
+    renderSuggest(res);
+}
+function doSearch(){
+    let keyword = searchInput.value.trim();
+    errTip.innerText = "";
+    if(keyword === ""){
+        errTip.innerText = "请输入搜索内容";
+        return;
+    }
+    const res = getSuggestList(keyword);
+    if(res.length === 0){
+        errTip.innerText = "未找到相关诗词、作者或朝代，请更换关键词重试";
+        return;
+    }
+    location.href = `翰墨诗库.html?key=${encodeURIComponent(keyword)}`;
+}
+searchConfirm.onclick = doSearch;
+searchInput.onkeydown = function(e){
+    errTip.innerText = "";
+    if(e.key === 'Enter') doSearch();
+}
+
+const avatarImg = document.getElementById('avatarImg');
+const avatarDefault = document.getElementById('avatarDefault');
+const saveAvatar = localStorage.getItem('userAvatar');
+if(saveAvatar){
+    avatarImg.src = saveAvatar;
+    avatarImg.style.display = 'block';
+    avatarDefault.style.display = 'none';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"SimSun", "KaiTi", serif;
+}
+body{
+    width:100vw;
+    height:100vh;
+    background-image: url("12.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;  /* 改这里！！强制铺满全屏，不留白边 */
+    background-position: center;
+    background-color: #f3ead8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.login-box{
+    width:400px;
+    padding:40px 30px;
+    background:rgba(255,255,255,0.72);
+    border-radius:12px;
+    border:1px solid #d4c8b4;
+    box-shadow:0 8px 24px rgba(80,60,40,0.12);
+}
+.login-box h2{
+    text-align:center;
+    color:#44382b;
+    margin-bottom:30px;
+    letter-spacing:6px;
+    font-size:28px;
+}
+.item{
+    margin-bottom:20px;
+}
+.item label{
+    display:block;
+    color:#55483a;
+    margin-bottom:6px;
+    font-size:17px;
+}
+.item input{
+    width:100%;
+    height:44px;
+    padding:0 14px;
+    border:1px solid #c9bca8;
+    border-radius:6px;
+    font-size:16px;
+    background:#fff;
+    font-family:"SimSun", "KaiTi", serif;
+}
+#loginBtn{
+    width:100%;
+    height:46px;
+    background:#332c22;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    font-size:17px;
+    cursor:pointer;
+    transition:0.2s;
+    font-family:"SimSun", "KaiTi", serif;
+}
+#loginBtn:hover{
+    background:#4b4032;
+}
+.msg{
+    height:22px;
+    text-align:center;
+    color:#c84242;
+    margin-top:12px;
+}
+.tip-link{
+    text-align:center;
+    margin-top:16px;
+}
+.tip-link a{
+    color:#55483a;
+    text-decoration:none;
+}
+.tip-link a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+<body>
+<div class="login-box">
+    <h2>登录</h2>
+    <div class="item">
+        <label>账号</label>
+        <input type="text" id="username" placeholder="请输入账号">
+    </div>
+    <div class="item">
+        <label>密码</label>
+        <input type="password" id="pwd" placeholder="请输入密码">
+    </div>
+    <button id="loginBtn">登录</button>
+    <div class="msg" id="tip"></div>
+    <div class="tip-link">
+        <a href="register.html">没有账号？点击注册</a>
+    </div>
+</div>
+<script>
+const userInput = document.getElementById('username');
+const pwdInput = document.getElementById('pwd');
+const btn = document.getElementById('loginBtn');
+const tip = document.getElementById('tip');
+btn.onclick = function(){
+    let u = userInput.value.trim();
+    let p = pwdInput.value.trim();
+    let userList = JSON.parse(localStorage.getItem("userList")) || {};
+    if(userList[u] && userList[u] === p){
+        localStorage.setItem("isLogin", "yes");
+        tip.innerText = "登录成功，正在跳转...";
+        setTimeout(()=>{
+            location.href = "古风.html";
+        },600);
+    }else{
+        tip.innerText = "账号或密码错误";
+    }
+}
+</script>
+</body>
+</html>
