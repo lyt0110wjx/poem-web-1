@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学习打卡 · 艾宾浩斯诗词记忆</title>
+<style>
+    *{ margin:0; padding:0; box-sizing:border-box; font-family:"Microsoft Yahei", "SimSun", serif; }
+    body{
+        background: url('4.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-color:#f8f5ee;
+        min-height:100vh;
+    }
+    body::before{
+        content:""; position:fixed; inset:0; background:rgba(248,245,238,0.4); z-index:0; pointer-events:none;
+    }
+
+    /* ========== 导航栏 ========== */
+    .top-nav{
+        width:100%; height:60px; background:#332c22; display:flex; align-items:center; justify-content:space-between;
+        padding:0 30px; gap:30px; position:relative; z-index:10;
+    }
+    .top-nav-brand{ display:flex; align-items:center; gap:20px; flex-shrink:0; }
+    .top-nav-logo{ width:46px; height:46px; border-radius:50%; object-fit:cover; display:block; border:none; overflow:hidden; }
+    .top-nav .title{ color:#fff; font-size:25px; font-weight:bold; white-space:nowrap; }
+    .top-nav-menu{ display:flex; align-items:center; gap:12px; flex:1; margin-left:370px; overflow:hidden; }
+    .top-nav a{ color:#fff; text-decoration:none; padding:8px 14px; border-radius:7px; font-size:15px; white-space:nowrap; }
+    .top-nav a.active, .top-nav a:hover{ background:#d4b878; color:#222; }
+    .top-nav-right{ display:flex; align-items:center; gap:16px; flex-shrink:0; }
+    .top-nav .search-btn{
+        width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,0.18);
+        background:rgba(255,255,255,0.06); cursor:pointer; display:flex; align-items:center; justify-content:center;
+        color:#fff; transition:all 0.25s ease;
+    }
+    .top-nav .search-btn:hover{ background:#d4b878; border-color:#d4b878; color:#222; }
+    .top-nav .avatar-link{
+        display:block; width:44px; height:44px; border-radius:50%; overflow:hidden; border:2px solid #d4b878;
+        flex-shrink:0; background:#fff; text-decoration:none; position:relative;
+    }
+    .top-nav .avatar-default{
+        position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:22px; color:#332c22; z-index:1;
+    }
+    .top-nav .avatar-img{
+        position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:none; z-index:2;
+    }
+
+    /* ========== 核心打卡布局 ========== */
+    .wrapper{ width:96%; max-width:1300px; margin:0 auto; padding:30px 0 60px; position:relative; z-index:1; }
+    .page-title{ text-align:center; color:#443a2c; margin-bottom:24px; font-size:32px; letter-spacing:4px; }
+
+    .stats-row{ display:grid; grid-template-columns:repeat(6, 1fr); gap:14px; margin-bottom:24px; }
+    .stat-card{
+        background:rgba(255,253,248,0.92); border:2px solid #c9a87c; border-radius:12px;
+        padding:16px 10px; text-align:center; box-shadow:0 6px 16px rgba(80,60,30,0.12);
+    }
+    .stat-card .num{ font-size:26px; color:#8c2626; font-weight:bold; font-family:"KaiTi", serif; }
+    .stat-card .label{ color:#7a5a3a; font-size:13px; margin-top:4px; }
+
+    .main-grid{ display:grid; grid-template-columns: 320px 1fr; gap:22px; }
+    .sidebar{ display:flex; flex-direction:column; gap:18px; }
+    .panel{
+        background:rgba(255,253,248,0.94); border:2px solid #c9a87c; border-radius:14px;
+        padding:22px; box-shadow:0 8px 24px rgba(80,60,30,0.15); position:relative;
+    }
+    .panel h3{ font-size:18px; color:#8c2626; border-left:4px solid #d4b878; padding-left:10px; margin-bottom:16px; }
+
+    .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; text-align:center; }
+    .calendar-head{ font-size:13px; color:#8c7b6b; font-weight:bold; padding-bottom:6px; }
+    .calendar-day{
+        aspect-ratio:1/1; display:flex; align-items:center; justify-content:center;
+        border-radius:6px; font-size:14px; color:#555; border:1px solid transparent; position:relative;
+    }
+    .calendar-day.today{ border-color:#d4b878; color:#8c2626; font-weight:bold; }
+    .calendar-day.done{ background:#d4b878; color:#fff; font-weight:bold; }
+    .calendar-day.done::after{ content:""; position:absolute; bottom:4px; width:4px; height:4px; border-radius:50%; background:#fff; }
+    .calendar-day.miss{ background:#f9ecec; color:#b86060; }
+
+    .btn{
+        width:100%; padding:10px; border:none; border-radius:8px; background:#d4b878; color:#332c22;
+        font-size:15px; font-weight:bold; cursor:pointer; margin-top:10px; transition:0.2s;
+    }
+    .btn:hover{ background:#c3a565; transform:translateY(-2px); }
+    .btn.secondary{ background:#b8a274; color:#fff; }
+    .btn.secondary:hover{ background:#a38f60; }
+    .btn.warn{ background:#b86060; color:#fff; }
+    .btn.warn:hover{ background:#a34d4d; }
+
+    textarea#poemInput{
+        width:100%; height:80px; padding:12px; border:1px solid #c9a87c; border-radius:8px;
+        font-size:15px; margin-bottom:6px; background:#fffbf4; resize:none; outline:none;
+    }
+    textarea#poemInput:focus{ border-color:#b89b6b; box-shadow:0 0 0 3px rgba(184,155,107,0.2); }
+
+    .task-item{
+        display:flex; justify-content:space-between; align-items:center;
+        padding:14px 0; border-bottom:1px dashed #e0d3bb; gap:12px;
+    }
+    .task-item:last-child{ border-bottom:none; }
+    .task-info{ flex:1; }
+    .task-name{ font-size:16px; color:#332c22; font-weight:bold; }
+    .task-meta{ font-size:13px; color:#7a5a3a; margin-top:4px; }
+    .tag{ padding:2px 6px; border-radius:4px; font-size:12px; color:#fff; margin-left:6px; }
+    .tag-easy{ background:#70a970; }
+    .tag-mid{ background:#d4a048; }
+    .tag-hard{ background:#b86060; }
+    .tag-overdue{ background:#c94444; }
+    
+    .level-group{ display:flex; gap:6px; align-items:center; }
+    .level-group button{
+        padding:6px 10px; border:1px solid #ccc; background:#fff; border-radius:6px;
+        cursor:pointer; font-size:13px; transition:0.2s; white-space:nowrap;
+    }
+    .level-group button:hover{ background:#f7e8cf; border-color:#c9a87c; }
+    .del-btn{
+        background:#f9ecec; color:#b86060; border:1px solid #e8c3c3; padding:4px 8px;
+        border-radius:6px; cursor:pointer; font-size:12px; margin-left:8px;
+    }
+    .del-btn:hover{ background:#b86060; color:#fff; }
+
+    .modal-mask, .check-modal-mask{
+        position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none;
+        align-items:center; justify-content:center; z-index:999;
+    }
+    .modal, .check-modal{
+        background:#fffdf8; border:2px solid #c9a87c; border-radius:14px;
+        padding:24px; width:600px; max-width:90%; max-height:85vh; overflow-y:auto;
+        box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+    .modal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    .modal-header h3{ color:#8c2626; font-size:22px; }
+    .close-modal{ font-size:26px; color:#999; cursor:pointer; line-height:1; }
+    .close-modal:hover{ color:#b86060; }
+
+    .check-question{ font-size:18px; color:#8c2626; font-weight:bold; margin-bottom:12px; }
+    .check-modal textarea{
+        width:100%; height:100px; padding:10px; border:1px solid #c9a87c;
+        border-radius:8px; font-size:15px; margin-bottom:12px; outline:none;
+    }
+    .check-btn-group{ display:flex; gap:10px; }
+    .check-result-box{ margin-top:16px; padding:12px; background:#f8f2e4; border-radius:8px; font-size:15px; line-height:1.8; }
+    .highlight-ok{ color:#2e7d32; font-weight:bold; }
+    .highlight-err{ color:#c62828; font-weight:bold; text-decoration:line-through; }
+
+    .chart-box{ height:220px; width:100%; position:relative; }
+
+    /* ========== 搜索弹窗样式 ========== */
+    .search-mask{
+        position:fixed; top:0; left:0; width:100%; height:100%;
+        background:rgba(0,0,0,0.55); z-index:9999; display:none; align-items:center; justify-content:center;
+    }
+    .search-dialog{
+        width:620px; background:#f8f3e8; border-radius:14px; padding:36px;
+        box-shadow:0 10px 35px rgba(0,0,0,0.25); position:relative;
+        border:2px solid #b89b6b; background-image: linear-gradient(rgba(232,222,206,0.25),rgba(232,222,206,0.25));
+    }
+    .search-dialog .tip-text{ font-size:20px; color:#5c3f24; margin-bottom:24px; letter-spacing:2px; }
+    .search-input{
+        width:100%; height:52px; border:2px solid #9c7d54; border-radius:9px;
+        padding:0 18px; font-size:17px; outline:none; background:#fffbf4; color:#443322;
+    }
+    .search-input:focus{ border-color:#b89b6b; box-shadow:0 0 0 3px rgba(184,155,107,0.22); }
+    .search-tip-err{ color:#a83838; font-size:15px; margin-top:10px; min-height:20px; }
+    .suggest-panel{
+        position:absolute; left:36px; right:36px; top:170px;
+        background:#fffbf4; border:2px solid #9c7d54; border-top:0;
+        border-radius:0 0 9px 9px; box-shadow:0 6px 16px rgba(0,0,0,0.12);
+        z-index:100; display:none; max-height:320px; overflow-y:auto;
+    }
+    .suggest-item{
+        display:flex; align-items:center; padding:13px 18px;
+        font-size:16px; color:#5c3f24; cursor:pointer; gap:12px;
+    }
+    .suggest-item:hover{ background:#efe6d7; }
+    .suggest-item .icon{ color:#9c7d54; }
+    .suggest-empty{ padding:20px; text-align:center; color:#887052; font-size:15px; }
+    .search-btn-group{ display:flex; justify-content:flex-end; gap:18px; margin-top:28px; }
+    .confirm-btn{
+        width:106px; height:46px; background:#8c6b44; color:#fff; border:none;
+        border-radius:8px; font-size:17px; cursor:pointer; letter-spacing:1px;
+    }
+    .cancel-btn{
+        width:106px; height:46px; background:#d9c9b3; color:#443322; border:none;
+        border-radius:8px; font-size:17px; cursor:pointer; letter-spacing:1px;
+    }
+    .confirm-btn:hover{ background:#725636; }
+    .cancel-btn:hover{ background:#c9b89f; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<div class="top-nav">
+    <div class="top-nav-brand">
+        <img src="logo2.png" alt="Logo" class="top-nav-logo">
+        <div class="title">文光载道，诗韵留香</div>
+    </div>
+    <div class="top-nav-menu">
+        <a href="首页.html">首页</a>
+        <a href="诗词沿革.html">诗词沿革</a>
+        <a href="诗境寻踪.html">诗境寻踪</a>
+        <a href="翰墨诗库.html">翰墨诗库</a>
+        <a href="AI诗韵工坊.html">AI诗韵工坊</a>
+        <a href="诗词闯关.html">诗词闯关</a>
+        <a href="学习打卡.html" class="active">学习打卡</a>
+        <a href="关于本站.html">关于本站</a>
+    </div>
+    <div class="top-nav-right">
+        <button class="search-btn" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="21" y1="21" x2="16.8" y2="16.8"></line>
+            </svg>
+        </button>
+        <a href="主页.html" class="avatar-link" title="点击进入个人主页">
+            <span class="avatar-default" id="avatarDefault">👤</span>
+            <img class="avatar-img" id="avatarImg" alt="用户头像">
+        </a>
+    </div>
+</div>
+
+<div class="wrapper">
+    <h1 class="page-title">📜 艾宾浩斯诗词记忆系统</h1>
+    
+    <!-- 数据面板 -->
+    <div class="stats-row">
+        <div class="stat-card"><div class="num" id="continueDay">0</div><div class="label">连续打卡</div></div>
+        <div class="stat-card"><div class="num" id="totalPoem">0</div><div class="label">累计背诵</div></div>
+        <div class="stat-card"><div class="num" id="todayDone">0</div><div class="label">今日已复习</div></div>
+        <div class="stat-card"><div class="num" id="waitReview">0</div><div class="label">今日待复习</div></div>
+        <div class="stat-card"><div class="num" id="finishRate">0%</div><div class="label">总完成率</div></div>
+        <div class="stat-card"><div class="num" id="totalReviews">0</div><div class="label">总复习次数</div></div>
+    </div>
+
+    <div class="main-grid">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="panel">
+                <h3>📅 学习日历</h3>
+                <div class="calendar-grid" id="calendarWrap"></div>
+                <div style="margin-top:12px;font-size:12px;color:#8c7b6b;text-align:center;">金底为已打卡，红底为漏打</div>
+            </div>
+            <div class="panel">
+                <h3>⚙️ 快捷操作</h3>
+                <button class="btn" onclick="aiSpotCheck()">AI随机抽查背诵</button>
+                <button class="btn secondary" onclick="location.href='诗词闯关.html'">前往默写闯关</button>
+                <button class="btn secondary" onclick="exportRecord()">导出全部数据</button>
+                <button class="btn warn" onclick="clearAllData()">清空所有数据</button>
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="content-area" style="display:flex;flex-direction:column;gap:18px;">
+            <div class="panel">
+                <h3>➕ 添加背诵任务</h3>
+                <textarea id="poemInput" placeholder="输入诗词名和作者，例如：登高，杜甫"></textarea>
+                <button class="btn" onclick="addPoemByAI(event)">生成背诵计划</button>
+            </div>
+
+            <div class="panel">
+                <h3>📖 今日复习清单</h3>
+                <div id="taskList"></div>
+            </div>
+
+            <div class="panel">
+                <h3>📈 记忆遗忘曲线（动态）</h3>
+                <div class="chart-box"><canvas id="forgetChart"></canvas></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 详情弹窗 -->
+<div class="modal-mask" id="poemModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">诗词详情</h3>
+            <span class="close-modal" onclick="document.getElementById('poemModal').style.display='none'">×</span>
+        </div>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<!-- 抽查弹窗 -->
+<div class="check-modal-mask" id="checkModal">
+    <div class="check-modal">
+        <div class="modal-header">
+            <h3>📝 背诵抽查</h3>
+            <span class="close-modal" onclick="closeCheckModal()">×</span>
+        </div>
+        <div class="check-question" id="checkQuestion"></div>
+        <textarea id="userAnswer" placeholder="在这里默写，不要写标点也行..."></textarea>
+        <div class="check-btn-group">
+            <button class="btn" onclick="submitCheckAnswer()" style="flex:1;">提交比对</button>
+            <button class="btn secondary" onclick="closeCheckModal()" style="flex:1;">取消</button>
+        </div>
+        <div id="checkResult" class="check-result-box" style="display:none;"></div>
+    </div>
+</div>
+
+<!-- 搜索弹窗 HTML -->
+<div class="search-mask" id="searchMask">
+    <div class="search-dialog">
+        <div class="tip-text">请输入诗词、作者或标题进行搜索：</div>
+        <input type="text" class="search-input" id="searchInput" placeholder="例如：李白、静夜思">
+        <div class="search-tip-err" id="errTip"></div>
+        <div class="suggest-panel" id="suggestPanel"></div>
+        <div class="search-btn-group">
+            <button class="confirm-btn" id="searchConfirm">确定</button>
+            <button class="cancel-btn" id="searchCancel">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 打卡核心逻辑 ========== -->
+<script>
+// 前端不再保存任何密钥，全部交由后端处理！
+let taskList = JSON.parse(localStorage.getItem("poemTask")) || [];
+let checkInDays = JSON.parse(localStorage.getItem("checkInDays")) || [];
+let chartInstance = null;
+let currentCheckPoem = null;
+
+// 内置常用诗词库（急速响应，避免网络慢）
+const localPoemDB = {
+    "登高": {
+        title: "登高", author: "杜甫",
+        content: "风急天高猿啸哀，渚清沙白鸟飞回。\n无边落木萧萧下，不尽长江滚滚来。\n万里悲秋常作客，百年多病独登台。\n艰难苦恨繁霜鬓，潦倒新停浊酒杯。",
+        note: "大历二年（767年）杜甫在夔州所作，被誉为“古今七律第一”。",
+        breakHint: "前四句写登高见闻，紧扣秋天特色；后四句写登高所感，由秋及人。",
+        errorWords: "渚（zhǔ）、啸（xiào）、繁霜鬓（bìn）",
+        memoryTip: "风急-天高-猿啸-渚清-沙白-鸟飞，体会对偶。",
+        difficulty: "中等"
+    },
+    "静夜思": {
+        title: "静夜思", author: "李白",
+        content: "床前明月光，疑是地上霜。\n举头望明月，低头思故乡。",
+        note: "在寂静的月夜思念家乡的感受。",
+        breakHint: "前两句写景，后两句抒情。",
+        errorWords: "疑（yí）",
+        memoryTip: "明月光 -> 地上霜 -> 举头 -> 低头。",
+        difficulty: "简单"
+    }
+};
+
+function saveData(){
+    localStorage.setItem("poemTask", JSON.stringify(taskList));
+    localStorage.setItem("checkInDays", JSON.stringify(checkInDays));
+}
+
+function renderCalendar(){
+    const wrap = document.getElementById("calendarWrap");
+    wrap.innerHTML = "";
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const todayDate = now.getDate();
+    
+    const weekDays = ["日","一","二","三","四","五","六"];
+    weekDays.forEach(w => wrap.innerHTML += `<div class="calendar-head">${w}</div>`);
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) wrap.innerHTML += `<div></div>`;
+
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = new Date(year, month, d).toLocaleDateString();
+        let cls = "calendar-day";
+        if (d === todayDate) cls += " today";
+        if (checkInDays.includes(dateStr)) cls += " done";
+        else if (d < todayDate) cls += " miss";
+        wrap.innerHTML += `<div class="${cls}">${d}</div>`;
+    }
+}
+
+function renderAll(){
+    renderStats();
+    renderCalendar();
+    renderTaskList();
+    setTimeout(updateChart, 100);
+}
+
+function renderStats(){
+    const today = new Date().setHours(0,0,0,0);
+    const todayStr = new Date().toLocaleDateString();
+    let wait = 0, finish = 0, totalReviews = 0;
+    
+    taskList.forEach(i => {
+        if (i.nextReview <= today) wait++;
+        if (i.reviewRecords.length > 0) finish++;
+        totalReviews += i.reviewRecords.length;
+    });
+
+    document.getElementById("totalPoem").innerText = taskList.length;
+    document.getElementById("waitReview").innerText = wait;
+    document.getElementById("todayDone").innerText = checkInDays.includes(todayStr) ? finish : 0; 
+    document.getElementById("totalReviews").innerText = totalReviews;
+    document.getElementById("finishRate").innerText = taskList.length ? Math.round(finish/taskList.length*100) + "%" : "0%";
+    document.getElementById("continueDay").innerText = calcContinueDay();
+}
+
+function calcContinueDay(){
+    if (checkInDays.length === 0) return 0;
+    const days = [...new Set(checkInDays)].map(d => new Date(d).setHours(0,0,0,0)).sort((a,b)=>b-a);
+    let continueNum = 0;
+    let now = new Date().setHours(0,0,0,0);
+    let expected = now;
+    
+    for (let t of days) {
+        if (t === expected) {
+            continueNum++;
+            expected -= 86400000;
+        } else if (t < expected) break;
+    }
+    if (continueNum === 0 && days[0] === now - 86400000) {
+        expected = now - 86400000;
+        for (let t of days) {
+            if (t === expected) { continueNum++; expected -= 86400000; }
+            else break;
+        }
+    }
+    return continueNum;
+}
+
+function renderTaskList(){
+    const wrap = document.getElementById("taskList");
+    wrap.innerHTML = "";
+    const today = new Date().setHours(0,0,0,0);
+
+    if (taskList.length === 0) {
+        wrap.innerHTML = '<div style="text-align:center;color:#8c7b6b;padding:20px;">还没有背诵任务，去上方添加一首吧~</div>';
+        return;
+    }
+
+    const sorted = [...taskList].sort((a,b) => a.nextReview - b.nextReview);
+
+    sorted.forEach(item => {
+        const isOver = item.nextReview < today;
+        let tagCls = "tag tag-";
+        if (item.difficulty === "简单") tagCls += "easy";
+        else if (item.difficulty === "中等") tagCls += "mid";
+        else tagCls += "hard";
+        if (isOver) tagCls = "tag tag-overdue";
+
+        const reviewDate = new Date(item.nextReview).toLocaleDateString();
+        wrap.innerHTML += `
+        <div class="task-item">
+            <div class="task-info">
+                <div class="task-name">
+                    《${item.title}》 · ${item.author}
+                    <span class="${tagCls}">${item.difficulty}</span>
+                    ${isOver ? '<span style="color:#c94444;font-size:12px;margin-left:6px;">[逾期]</span>' : ''}
+                </div>
+                <div class="task-meta">
+                    下次：${reviewDate} | 已复习 ${item.reviewRecords.length} 次
+                    <button class="del-btn" onclick="deleteTask(${item.id})">删除</button>
+                    <button style="border:none;background:none;color:#8c2626;cursor:pointer;margin-left:6px;font-size:13px;" onclick="openModal(${item.id})">详情</button>
+                </div>
+            </div>
+            <div class="level-group">
+                <button onclick="submitReview(${item.id},'bad')">🔴 不熟</button>
+                <button onclick="submitReview(${item.id},'mid')">🟡 一般</button>
+                <button onclick="submitReview(${item.id},'good')">🟢 熟练</button>
+            </div>
+        </div>`;
+    });
+}
+
+function deleteTask(id){
+    if (!confirm("确定删除这首诗词的背诵任务吗？")) return;
+    taskList = taskList.filter(t => t.id !== id);
+    saveData();
+    renderAll();
+}
+
+function submitReview(taskId, level){
+    const todayStr = new Date().toLocaleDateString();
+    if (!checkInDays.includes(todayStr)) checkInDays.push(todayStr);
+    const idx = taskList.findIndex(t => t.id === taskId);
+    const item = taskList[idx];
+    item.reviewRecords.push({ time: Date.now(), level });
+
+    const rules = {
+        bad:  { good: 2, mid: 1, bad: 1 },
+        mid:  { good: 4, mid: 2, bad: 1 },
+        good: { good: 7, mid: 4, bad: 2 }
+    };
+    const days = rules[item.lastLevel]?.[level] || 1;
+    
+    item.nextReview = getDayTs(days);
+    item.lastLevel = level;
+    saveData();
+    renderAll();
+    alert(`打卡成功！《${item.title}》将在 ${days} 天后再次复习。`);
+}
+
+function getDayTs(addDay){
+    const d = new Date();
+    d.setDate(d.getDate() + addDay);
+    d.setHours(0,0,0,0);
+    return d.getTime();
+}
+
+async function addPoemByAI(e){
+    const input = document.getElementById("poemInput").value.trim();
+    if (!input) return alert("请输入诗词名，例如：登高，杜甫");
+
+    const parts = input.split(/[，,\s]+/);
+    const title = parts[0];
+    const author = parts[1] || "未知";
+
+    let poemInfo = null;
+
+    // 优先读本地极速库
+    if (localPoemDB[title]) {
+        poemInfo = localPoemDB[title];
+    } else {
+        const btn = e ? e.target : document.querySelector(".btn");
+        const oldText = btn.innerText;
+        btn.innerText = "AI 解析生成中...";
+        btn.disabled = true;
+
+        const prompt = `你是中小学古诗词辅导老师，处理诗词【${input}】。
+请输出严格JSON，不要有任何 markdown 格式，不要有多余文字。字段如下：
+{
+    "title": "诗词标题",
+    "author": "作者",
+    "content": "完整原诗（带换行符\\n）",
+    "note": "简短注释/背景",
+    "breakHint": "分句或分段背诵提示",
+    "errorWords": "易错字",
+    "memoryTip": "记忆技巧",
+    "difficulty": "简单/中等/难"
+}`;
+
+        try {
+            // 【核心修改】请求你自己的本地后端服务器，不再直接请求豆包！
+            const res = await fetch("/api/generate-poem", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json" 
+                },
+                body: JSON.stringify({ 
+                    prompt: prompt 
+                })
+            });
+            
+            if (!res.ok) throw new Error("本地后端请求失败");
+            
+            const json = await res.json();
+            let raw = json.content; // 后端传回来的内容
+            
+            raw = raw.replace(/```json/g, "").replace(/```/g, "").trim();
+            poemInfo = JSON.parse(raw);
+            
+        } catch(e) {
+            console.error("请求解析失败：", e);
+        } finally {
+            btn.innerText = oldText;
+            btn.disabled = false;
+        }
+
+        // 兜底：手动输入
+        if (!poemInfo) {
+            const isAddManual = confirm(`AI 未响应或解析失败。\n\n点击【确定】手动输入这首诗的原诗及提示。\n点击【取消】放弃添加。`);
+            if (!isAddManual) return;
+
+            const manualContent = prompt(`请输入《${title}》的完整原文（可使用 \\n 换行）：`);
+            if (manualContent === null) return;
+
+            poemInfo = {
+                title: title, author: author,
+                content: manualContent.replace(/\\n/g, '\n'),
+                note: prompt("请输入注释（选填）：") || "暂无注释",
+                breakHint: prompt("请输入背诵提示（选填）：") || "暂未设置",
+                errorWords: prompt("请输入易错字（选填）：") || "无",
+                memoryTip: prompt("请输入记忆技巧（选填）：") || "多读多背",
+                difficulty: "中等"
+            };
+        }
+    }
+
+    const newTask = {
+        id: Date.now(),
+        ...poemInfo,
+        createTime: Date.now(),
+        reviewRecords: [],
+        nextReview: getDayTs(1),
+        lastLevel: "mid"
+    };
+    
+    taskList.push(newTask);
+    saveData();
+    renderAll();
+    document.getElementById("poemInput").value = "";
+    alert(`🎉 添加成功！《${newTask.title}》已加入复习清单。`);
+}
+
+function aiSpotCheck(){
+    if (taskList.length === 0) return alert("请先添加诗词！");
+    const randomOne = taskList[Math.floor(Math.random() * taskList.length)];
+    currentCheckPoem = randomOne;
+    document.getElementById("checkQuestion").innerText = `请默写：《${randomOne.title}》（${randomOne.author}）`;
+    document.getElementById("userAnswer").value = "";
+    document.getElementById("checkResult").style.display = "none";
+    document.getElementById("checkModal").style.display = "flex";
+}
+
+function closeCheckModal(){
+    document.getElementById("checkModal").style.display = "none";
+}
+
+function submitCheckAnswer(){
+    const ans = document.getElementById("userAnswer").value.trim();
+    if (!ans) return alert("请输入答案");
+    
+    // 去掉标点和空格，只比对纯文字
+    const origin = (currentCheckPoem.content || "").replace(/[，。！？、,.!? \n]/g, "");
+    const input = ans.replace(/[，。！？、,.!? \n]/g, "");
+
+    if (!origin) {
+        document.getElementById("checkResult").style.display = "block";
+        document.getElementById("checkResult").innerHTML = "⚠️ 标准原诗缺失，无法比对。请删除此任务并重新添加。";
+        return;
+    }
+
+    let html = "";
+    let matchCount = 0;
+    
+    // 逐字比对（以原诗长度为基准）
+    for (let i = 0; i < origin.length; i++) {
+        const charO = origin[i];
+        const charI = input[i];
+        
+        if (charI === charO) {
+            matchCount++;
+            html += `<span class="highlight-ok">${charI}</span>`;
+        } else {
+            if (charI) {
+                // 写错了（划掉用户的，显示原诗正确的）
+                html += `<span class="highlight-err">${charI}</span><span class="highlight-ok">${charO}</span>`;
+            } else {
+                // 漏写了
+                html += `<span style="color:#999;text-decoration:underline;">[漏:${charO}]</span>`;
+            }
+        }
+    }
+    
+    // 如果用户写得比原诗还长，说明多写了字
+    if (input.length > origin.length) {
+        html += `<span class="highlight-err">[多写了:${input.substring(origin.length)}]</span>`;
+    }
+
+    const score = Math.round((matchCount / origin.length) * 100);
+    let evalStr = "";
+    if (score === 100) evalStr = "🎉 完美无瑕！一字不差！";
+    else if (score >= 80) evalStr = "👍 非常棒！只有一点小瑕疵。";
+    else if (score >= 50) evalStr = "💪 还可以，还需要多复习几遍！";
+    else evalStr = "📖 熟练度不够，建议回到原文重读。";
+
+    document.getElementById("checkResult").style.display = "block";
+    document.getElementById("checkResult").innerHTML = `
+        <div style="margin-bottom:8px;"><strong>比对结果：</strong>${evalStr} (匹配度 ${score}%)</div>
+        <div style="font-size:16px; line-height:1.8; letter-spacing:1px;">${html}</div>
+    `;
+}
+
+function updateChart(){
+    if (typeof Chart === "undefined") return;
+    const ctx = document.getElementById("forgetChart").getContext("2d");
+    if (chartInstance) chartInstance.destroy();
+
+    let avgLevel = 0;
+    if (taskList.length > 0) {
+        let sum = 0;
+        taskList.forEach(t => {
+            if (t.lastLevel === 'good') sum += 3;
+            else if (t.lastLevel === 'mid') sum += 2;
+            else sum += 1;
+        });
+        avgLevel = sum / taskList.length;
+    }
+    const baseRetention = avgLevel === 0 ? 50 : (avgLevel / 3) * 100;
+
+    chartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: ["第0天", "第1天", "第2天", "第4天", "第7天", "第15天"],
+            datasets: [{
+                label: "当前平均记忆留存率(%)",
+                data: [100, 100 - (100-baseRetention)*0.3, 100 - (100-baseRetention)*0.5, 100 - (100-baseRetention)*0.7, 100 - (100-baseRetention)*0.9, baseRetention],
+                borderColor: "#d4b878",
+                backgroundColor: "rgba(212,184,120,0.15)",
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#8c2626"
+            }]
+        },
+        options: {
+            responsive: true, 
+            maintainAspectRatio: false,
+            scales: { y: { min: 0, max: 100, ticks: { stepSize: 20 } } }
+        }
+    });
+}
+
+function openModal(id){
+    const item = taskList.find(x => x.id === id);
+    document.getElementById("modalTitle").innerText = item.title + " - " + item.author;
+    document.getElementById("modalBody").innerHTML = `
+        <p style="font-size:16px;line-height:2;"><strong>原文：</strong><br>${item.content}</p>
+        <p style="margin-top:12px;"><strong>注释：</strong>${item.note}</p>
+        <p style="margin-top:12px;"><strong>背诵提示：</strong>${item.breakHint}</p>
+        <p style="margin-top:12px;"><strong>易错字：</strong>${item.errorWords}</p>
+        <p style="margin-top:12px;"><strong>记忆技巧：</strong>${item.memoryTip}</p>
+    `;
+    document.getElementById("poemModal").style.display = "flex";
+}
+
+function exportRecord(){
+    if(taskList.length === 0) return alert("暂无数据导出");
+    const str = JSON.stringify({ taskList, checkInDays }, null, 2);
+    const blob = new Blob([str], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "诗词背诵数据备份.json";
+    a.click();
+}
+
+function clearAllData(){
+    if (!confirm("⚠️ 警告：这会清空你的所有背诵任务和打卡记录，且无法恢复。确定吗？")) return;
+    localStorage.removeItem("poemTask");
+    localStorage.removeItem("checkInDays");
+    taskList = [];
+    checkInDays = [];
+    renderAll();
+}
+
+renderAll();
+</script>
+
+<!-- ========== 搜索弹窗逻辑 ========== -->
+<script>
+const searchBtn = document.querySelector('.top-nav .search-btn');
+const searchMask = document.getElementById('searchMask');
+const searchInput = document.getElementById('searchInput');
+const searchConfirm = document.getElementById('searchConfirm');
+const searchCancel = document.getElementById('searchCancel');
+const suggestPanel = document.getElementById('suggestPanel');
+const errTip = document.getElementById('errTip');
+
+// 搜索数据源（保留你的全量数据）
+const searchData = [
+  {type:"poem",name:"山坡羊·潼关怀古",searchText:"山坡羊潼关怀古 峰峦如聚 伤心秦汉经行处",link:"张养浩精选作品.html"},
+  {type:"poem",name:"山坡羊·骊山怀古",searchText:"山坡羊骊山怀古",link:"张养浩精选作品.html"},
+  {type:"poem",name:"水仙子",searchText:"水仙子",link:"张养浩精选作品.html"},
+  {type:"poet",name:"张养浩",searchText:"张养浩",link:"张养浩.html"},
+  {type:"poem",name:"西厢记",searchText:"西厢记 碧云天 总是离人泪",link:"王实甫精选作品.html"},
+  {type:"poem",name:"丽春堂",searchText:"丽春堂",link:"王实甫精选作品.html"},
+  {type:"poem",name:"破窑记",searchText:"破窑记",link:"王实甫精选作品.html"},
+  {type:"poet",name:"王实甫",searchText:"王实甫",link:"王实甫.html"},
+  {type:"poem",name:"倩女离魂",searchText:"倩女离魂",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"王粲登楼",searchText:"王粲登楼",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"㑇梅香",searchText:"㑇梅香",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"周公摄政",searchText:"周公摄政",link:"郑光祖精选作品.html"},
+  {type:"poet",name:"郑光祖",searchText:"郑光祖",link:"郑光祖.html"},
+  {type:"poem",name:"天净沙·秋思",searchText:"天净沙秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"汉宫秋",searchText:"汉宫秋",link:"马致远精选作品.html"},
+  {type:"poem",name:"双调夜行船·秋思",searchText:"双调夜行船秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"寿阳曲·江天暮雪",searchText:"寿阳曲江天暮雪",link:"马致远精选作品.html"},
+  {type:"poet",name:"马致远",searchText:"马致远",link:"马致远.html"},
+  {type:"poem",name:"窦娥冤",searchText:"窦娥冤",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"单刀会",searchText:"单刀会",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"救风尘",searchText:"救风尘",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"南吕一枝花·不服老",searchText:"南吕一枝花不服老",link:"关汉卿精选作品.html"},
+  {type:"poet",name:"关汉卿",searchText:"关汉卿",link:"关汉卿.html"},
+  {type:"poem",name:"醉翁亭记",searchText:"醉翁亭记",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"蝶恋花·庭院深深深几许",searchText:"蝶恋花 庭院深深深几许",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"生查子·元夕",searchText:"生查子元夕",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"浪淘沙·把酒祝东风",searchText:"浪淘沙把酒祝东风",link:"欧阳修精选作品.html"},
+  {type:"poet",name:"欧阳修",searchText:"欧阳修",link:"欧阳修.html"},
+  {type:"poem",name:"示儿",searchText:"示儿",link:"陆游精选作品.html"},
+  {type:"poem",name:"游山西村",searchText:"游山西村",link:"陆游精选作品.html"},
+  {type:"poem",name:"书愤",searchText:"书愤",link:"陆游精选作品.html"},
+  {type:"poem",name:"钗头凤·红酥手",searchText:"钗头凤红酥手",link:"陆游精选作品.html"},
+  {type:"poet",name:"陆游",searchText:"陆游",link:"陆游.html"},
+  {type:"poem",name:"雨霖铃·寒蝉凄切",searchText:"雨霖铃寒蝉凄切",link:"柳永精选作品.html"},
+  {type:"poem",name:"蝶恋花·伫倚危楼风细细",searchText:"蝶恋花伫倚危楼风细细",link:"柳永精选作品.html"},
+  {type:"poem",name:"八声甘州·对潇潇暮雨洒江天",searchText:"八声甘州对潇潇暮雨洒江天",link:"柳永精选作品.html"},
+  {type:"poem",name:"望海潮·东南形胜",searchText:"望海潮东南形胜",link:"柳永精选作品.html"},
+  {type:"poet",name:"柳永",searchText:"柳永",link:"柳永.html"},
+  {type:"poem",name:"醉花阴·薄雾浓云愁永昼",searchText:"醉花阴薄雾浓云愁永昼",link:"poem.html"},
+  {type:"poem",name:"声声慢·寻寻觅觅",searchText:"声声慢寻寻觅觅",link:"poem.html"},
+  {type:"poem",name:"一剪梅·红藕香残玉簟秋",searchText:"一剪梅红藕香残玉簟秋",link:"poem.html"},
+  {type:"poem",name:"夏日绝句",searchText:"夏日绝句",link:"poem.html"},
+  {type:"poet",name:"李清照",searchText:"李清照",link:"李清照.html"},
+  {type:"poem",name:"破阵子·为陈同甫赋壮词以寄之",searchText:"破阵子为陈同甫赋壮词以寄之",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"青玉案·元夕",searchText:"青玉案元夕",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"永遇乐·京口北固亭怀古",searchText:"永遇乐京口北固亭怀古",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"南乡子·登京口北固亭有怀",searchText:"南乡子登京口北固亭有怀",link:"辛弃疾精选作品.html"},
+  {type:"poet",name:"辛弃疾",searchText:"辛弃疾",link:"辛弃疾.html"},
+  {type:"poem",name:"念奴娇·赤壁怀古",searchText:"念奴娇赤壁怀古",link:"su_poem.html"},
+  {type:"poem",name:"水调歌头·明月几时有",searchText:"水调歌头明月几时有",link:"su_poem.html"},
+  {type:"poem",name:"定风波·莫听穿林打叶声",searchText:"定风波莫听穿林打叶声",link:"su_poem.html"},
+  {type:"poem",name:"江城子·乙卯正月二十日夜记梦",searchText:"江城子乙卯正月二十日夜记梦",link:"su_poem.html"},
+  {type:"poet",name:"苏轼",searchText:"苏轼",link:"苏轼.html"},
+  {type:"poem",name:"无题·相见时难别亦难",searchText:"无题相见时难别亦难",link:"李商隐精选作品.html"},
+  {type:"poem",name:"锦瑟",searchText:"锦瑟",link:"李商隐精选作品.html"},
+  {type:"poem",name:"夜雨寄北",searchText:"夜雨寄北",link:"李商隐精选作品.html"},
+  {type:"poem",name:"登乐游原",searchText:"登乐游原",link:"李商隐精选作品.html"},
+  {type:"poet",name:"李商隐",searchText:"李商隐",link:"李商隐.html"},
+  {type:"poem",name:"师说",searchText:"师说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"马说",searchText:"马说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"左迁至蓝关示侄孙湘",searchText:"左迁至蓝关示侄孙湘",link:"韩愈精选作品.html"},
+  {type:"poem",name:"进学解",searchText:"进学解",link:"韩愈精选作品.html"},
+  {type:"poet",name:"韩愈",searchText:"韩愈",link:"韩愈.html"},
+  {type:"poem",name:"琵琶行",searchText:"琵琶行",link:"bai_s.html"},
+  {type:"poem",name:"长恨歌",searchText:"长恨歌",link:"bai_s.html"},
+  {type:"poem",name:"钱塘湖春行",searchText:"钱塘湖春行",link:"bai_s.html"},
+  {type:"poet",name:"白居易",searchText:"白居易",link:"白居易.html"},
+  {type:"poem",name:"山居秋暝",searchText:"山居秋暝",link:"王维精选作品.html"},
+  {type:"poem",name:"使至塞上",searchText:"使至塞上",link:"王维精选作品.html"},
+  {type:"poem",name:"鸟鸣涧",searchText:"鸟鸣涧",link:"王维精选作品.html"},
+  {type:"poem",name:"鹿柴",searchText:"鹿柴",link:"王维精选作品.html"},
+  {type:"poet",name:"王维",searchText:"王维",link:"王维.html"},
+  {type:"poem",name:"登高",searchText:"登高",link:"du_s.html"},
+  {type:"poem",name:"春望",searchText:"春望",link:"du_s.html"},
+  {type:"poem",name:"茅屋为秋风所破歌",searchText:"茅屋为秋风所破歌",link:"du_s.html"},
+  {type:"poet",name:"杜甫",searchText:"杜甫",link:"杜甫.html"},
+  {type:"poem",name:"将进酒",searchText:"将进酒",link:"libai_s.html"},
+  {type:"poem",name:"行路难·其一",searchText:"行路难其一",link:"libai_s.html"},
+  {type:"poem",name:"渡荆门送别",searchText:"渡荆门送别",link:"libai_s.html"},
+  {type:"poet",name:"李白",searchText:"李白",link:"李白.html"},
+  {type:"poem",name:"泰山吟",searchText:"泰山吟",link:"xie_s.html"},
+  {type:"poem",name:"拟嵇中散咏松诗",searchText:"拟嵇中散咏松诗",link:"xie_s.html"},
+  {type:"poem",name:"登池上楼",searchText:"登池上楼",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"石壁精舍还湖中作",searchText:"石壁精舍还湖中作",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"入彭蠡湖口",searchText:"入彭蠡湖口",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"山居赋",searchText:"山居赋",link:"谢灵运精选作品.html"},
+  {type:"poet",name:"谢灵运",searchText:"谢灵运",link:"谢灵运.html"},
+  {type:"poem",name:"饮酒·其五",searchText:"饮酒其五",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归园田居·其一",searchText:"归园田居其一",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归去来兮辞",searchText:"归去来兮辞",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"杂诗",searchText:"杂诗",link:"陶渊明精选作品.html"},
+  {type:"poet",name:"陶渊明",searchText:"陶渊明",link:"陶渊明.html"},
+  {type:"poem",name:"白马篇",searchText:"白马篇",link:"曹植精选作品.html"},
+  {type:"poem",name:"洛神赋",searchText:"洛神赋",link:"曹植精选作品.html"},
+  {type:"poem",name:"七步诗",searchText:"七步诗",link:"曹植精选作品.html"},
+  {type:"poem",name:"七哀诗",searchText:"七哀诗",link:"曹植精选作品.html"},
+  {type:"poet",name:"曹植",searchText:"曹植",link:"曹植.html"},
+  {type:"poem",name:"燕歌行",searchText:"燕歌行",link:"曹丕精选作品.html"},
+  {type:"poem",name:"典论·论文",searchText:"典论论文",link:"曹丕精选作品.html"},
+  {type:"poem",name:"杂诗二首·其一",searchText:"杂诗二首其一",link:"曹丕精选作品.html"},
+  {type:"poem",name:"善哉行",searchText:"善哉行",link:"曹丕精选作品.html"},
+  {type:"poet",name:"曹丕",searchText:"曹丕",link:"曹丕.html"},
+  {type:"poem",name:"离骚",searchText:"离骚",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·湘夫人",searchText:"九歌湘夫人",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·国殇",searchText:"九歌国殇",link:"屈原精选作品.html"},
+  {type:"poem",name:"九章·橘颂",searchText:"九章橘颂",link:"屈原精选作品.html"},
+  {type:"poet",name:"屈原",searchText:"屈原",link:"屈原.html"},
+  {type:"poem",name:"论语·学而",searchText:"论语学而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·为政",searchText:"论语为政",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·述而",searchText:"论语述而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·颜渊",searchText:"论语颜渊",link:"孔子精选作品.html"},
+  {type:"poem",name:"孟子·公孙丑上",searchText:"孟子公孙丑上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·告子上",searchText:"孟子告子上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·离娄上",searchText:"孟子离娄上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·尽心下",searchText:"孟子尽心下",link:"孟子精选作品.html"},
+  {type:"poem",name:"史记·陈涉世家",searchText:"史记陈涉世家",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·项羽本纪",searchText:"史记项羽本纪",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·太史公自序",searchText:"史记太史公自序",link:"司马迁精选作品.html"},
+  {type:"poet",name:"司马迁",searchText:"司马迁",link:"司马迁.html"},
+  {type:"poem",name:"荀子·天论",searchText:"荀子天论",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·性恶",searchText:"荀子性恶",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·劝学",searchText:"荀子劝学",link:"荀子精选作品.html"},
+  {type:"poet",name:"荀子",searchText:"荀子",link:"荀子.html"},
+  {type:"poem",name:"过秦论",searchText:"过秦论",link:"贾谊精选作品.html"},
+  {type:"poem",name:"鵩鸟赋",searchText:"鵩鸟赋",link:"贾谊精选作品.html"},
+  {type:"poem",name:"惜誓",searchText:"惜誓",link:"贾谊精选作品.html"},
+  {type:"poem",name:"治安策",searchText:"治安策",link:"贾谊精选作品.html"},
+  {type:"poet",name:"贾谊",searchText:"贾谊",link:"贾谊.html"},
+  {type:"poem",name:"子虚赋",searchText:"子虚赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"上林赋",searchText:"上林赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"凤求凰",searchText:"凤求凰",link:"司马相如精选作品.html"},
+  {type:"poet",name:"司马相如",searchText:"司马相如",link:"司马相如.html"},
+  {type:"poem",name:"长门赋",searchText:"长门赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"报任安书",searchText:"报任安书",link:"司马迁精选作品.html"},
+  {type:"poem",name:"二京赋",searchText:"二京赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"归田赋",searchText:"归田赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"灵宪",searchText:"灵宪",link:"张衡精选作品.html"},
+  {type:"poet",name:"张衡",searchText:"张衡",link:"张衡.html"},
+  {type:"poem",name:"四愁诗",searchText:"四愁诗",link:"张衡精选作品.html"},
+  {type:"poem",name:"两都赋",searchText:"两都赋",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·司马迁传",searchText:"汉书司马迁传",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·董仲舒传",searchText:"汉书董仲舒传",link:"班固精选作品.html"},
+  {type:"poet",name:"班固",searchText:"班固",link:"班固.html"},
+  {type:"poem",name:"咏史",searchText:"咏史",link:"班固精选作品.html"},
+  {type:"poem",name:"解嘲",searchText:"解嘲",link:"扬雄精选作品.html"},
+  {type:"poem",name:"太玄经",searchText:"太玄经",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·吾子",searchText:"法言吾子",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·学行",searchText:"法言学行",link:"扬雄精选作品.html"},
+  {type:"poet",name:"扬雄",searchText:"扬雄",link:"扬雄.html"},
+  {type:"poem",name:"蒿里行",searchText:"蒿里行",link:"曹操精选作品.html"},
+  {type:"poem",name:"短歌行",searchText:"短歌行",link:"曹操精选作品.html"},
+  {type:"poem",name:"龟虽寿",searchText:"龟虽寿",link:"曹操精选作品.html"},
+  {type:"poem",name:"观沧海",searchText:"观沧海",link:"曹操精选作品.html"},
+  {type:"poet",name:"曹操",searchText:"曹操",link:"曹操.html"},
+  {type:"dynasty",name:"先秦",searchText:"先秦",link:"翰墨诗库.html?key=先秦"},
+  {type:"dynasty",name:"汉代",searchText:"汉代",link:"翰墨诗库.html?key=汉代"},
+  {type:"dynasty",name:"魏晋南北朝",searchText:"魏晋南北朝",link:"翰墨诗库.html?key=魏晋南北朝"},
+  {type:"dynasty",name:"唐朝",searchText:"唐朝",link:"翰墨诗库.html?key=唐朝"},
+  {type:"dynasty",name:"宋朝",searchText:"宋朝",link:"翰墨诗库.html?key=宋朝"},
+  {type:"dynasty",name:"元朝",searchText:"元朝",link:"翰墨诗库.html?key=元朝"}
+];
+
+function getSuggestList(keyword){
+  if(!keyword.trim()) return [];
+  const kw = keyword.trim().toLowerCase();
+  const matchAll = searchData.filter(item=> 
+    item.name.toLowerCase().includes(kw) || item.searchText.toLowerCase().includes(kw)
+  );
+  const poetList = matchAll.filter(i=>i.type==="poet");
+  const poemList = matchAll.filter(i=>i.type==="poem");
+  const dynastyList = matchAll.filter(i=>i.type==="dynasty");
+  return [...poetList,...poemList,...dynastyList];
+}
+
+function renderSuggest(list){
+  if(list.length ===0){
+    suggestPanel.innerHTML = `<div class="suggest-empty">无相关结果</div>`;
+  }else{
+    suggestPanel.innerHTML = list.map(item=>`
+      <div class="suggest-item" data-link="${item.link}">
+        <span class="icon">🔍</span>
+        <span>${item.name}</span>
+      </div>
+    `).join("");
+    document.querySelectorAll(".suggest-item").forEach(el=>{
+      el.onclick = ()=>{
+        location.href = el.dataset.link;
+      }
+    })
+  }
+  suggestPanel.style.display = "block";
+}
+
+searchBtn.onclick = function(){
+    searchMask.style.display = 'flex';
+    searchInput.value = '';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+    searchInput.focus();
+}
+function closeSearchDialog(){
+    searchMask.style.display = 'none';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+}
+searchCancel.onclick = closeSearchDialog;
+searchMask.onclick = function(e){
+    if(e.target === searchMask) closeSearchDialog();
+}
+searchInput.oninput = function(){
+    errTip.innerText = "";
+    const kw = this.value;
+    if(!kw.trim()){
+        suggestPanel.style.display="none";
+        return;
+    }
+    const res = getSuggestList(kw);
+    renderSuggest(res);
+}
+function doSearch(){
+    let keyword = searchInput.value.trim();
+    errTip.innerText = "";
+    if(keyword === ""){
+        errTip.innerText = "请输入搜索内容";
+        return;
+    }
+    const res = getSuggestList(keyword);
+    if(res.length === 0){
+        errTip.innerText = "未找到相关诗词、作者或朝代，请更换关键词重试";
+        return;
+    }
+    location.href = `翰墨诗库.html?key=${encodeURIComponent(keyword)}`;
+}
+searchConfirm.onclick = doSearch;
+searchInput.onkeydown = function(e){
+    errTip.innerText = "";
+    if(e.key === 'Enter') doSearch();
+}
+
+const avatarImg = document.getElementById('avatarImg');
+const avatarDefault = document.getElementById('avatarDefault');
+const saveAvatar = localStorage.getItem('userAvatar');
+if(saveAvatar){
+    avatarImg.src = saveAvatar;
+    avatarImg.style.display = 'block';
+    avatarDefault.style.display = 'none';
+}
+</script>
+</body>
+</html>

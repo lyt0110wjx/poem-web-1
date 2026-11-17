@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>古诗文网站</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* 导航栏 */
+        nav{
+            width: 100%;
+            height: 60px;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding:0 30px;
+            position: fixed;
+            top:0;
+            z-index:99;
+        }
+        .logo{
+            color:#fff;
+            font-size:22px;
+            font-family: "STLiti", "STXingkai", serif;
+        }
+        .nav-link a{
+            color:#fff;
+            text-decoration: none;
+            margin:0 10px;
+            font-family: "STKaiti", serif;
+        }
+        /* 横幅区域：视频背景 */
+        .banner{
+            width:100%;
+            height:100vh;
+            position:relative;
+            overflow:hidden;
+        }
+        /* 视频样式 */
+        .banner video{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        .banner-text{
+            position:absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%, -50%);
+            color:#fff;
+            text-align:center;
+        }
+        .banner-text h2{
+            font-size:60px;
+            font-weight:normal;
+            font-family: "STLiti", "STXingkai", serif;
+        }
+        .banner-text h1{
+            font-size:75px;
+            color:#fff3b0;
+            margin:8px 0 15px;
+            font-family: "STLiti", "STXingkai", serif;
+        }
+        .banner-text p{
+            font-size:24px;
+            margin-bottom:30px;
+            font-family: "STKaiti", serif;
+        }
+        /* ========== 步入诗境 按钮链接样式 ========== */
+        .go-btn{
+            display:inline-block;
+            padding:14px 45px;
+            background:transparent;
+            border:1px solid #fff3b0;
+            color:#fff3b0;
+            border-radius:6px;
+            text-decoration:none;  /* 去除超链接下划线 */
+            font-size:24px;
+            font-family: "STLiti", "STXingkai", serif;
+        }
+        .go-btn:hover{
+            background:rgba(255, 243, 176, 0.2);
+        }
+        /* ========== 弹窗CSS ========== */
+        .modal{
+            display:none; /* 默认隐藏弹窗 */
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.6);
+            z-index:999;
+        }
+        .modal-box{
+            width:420px;
+            background:#fff;
+            padding:30px;
+            border-radius:12px;
+            position:absolute;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            color:#333;
+        }
+        .close-btn{
+            position:absolute;
+            right:20px;
+            top:15px;
+            font-size:28px;
+            cursor:pointer;
+            color:#666;
+        }
+    </style>
+</head>
+<body>
+<!--导航栏，联系我们加上onclick点击事件-->
+<nav>
+    <div class="logo">M</div>
+    <div class="nav-link">
+        <a href="古风.html">首页</a>
+        <a href="javascript:openModal()">联系我们</a>
+    </div>
+</nav>
+<div class="banner">
+    <video src="光.mp4" autoplay muted loop></video>
+    <div class="banner-text">
+        <h2>千年文脉</h2>
+        <h1>万古诗行</h1>
+        <p>Poems span ages, words carry eternity</p>
+        <a href="古风.html" class="go-btn">步入诗境</a>
+    </div>
+</div>
+<!-- 弹窗内容 -->
+<div class="modal" id="contactModal">
+    <div class="modal-box">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h3>联系我们</h3>
+        <p style="margin-top:15px;line-height:2;">
+            网站：古诗文鉴赏平台<br>
+            邮箱：poem@example.com<br>
+            电话：029-12345678
+        </p>
+    </div>
+</div>
+<!-- JS脚本，弹窗打开关闭 -->
+<script>
+function openModal(){
+    document.getElementById("contactModal").style.display="block";
+}
+function closeModal(){
+    document.getElementById("contactModal").style.display="none";
+}
+</script>
+</body>
+</html>
