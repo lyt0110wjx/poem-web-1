@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张养浩专题网站</title>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:"Microsoft Yahei","宋体";
+    }
+    body{
+        position:relative;
+        background:#f3ead8;
+        color:#444;
+        line-height:1.8;
+        background-image:
+            url('10.jpg'),
+            radial-gradient(circle at 20% 30%, rgba(168,85,85,0.06) 0, transparent 40%),
+            radial-gradient(circle at 80% 70%, rgba(140,59,59,0.06) 0, transparent 40%);
+        background-size:cover;
+        background-position:center;
+        background-repeat:no-repeat;
+        background-attachment:fixed;
+    }
+    body::before{
+        content:"";
+        position:fixed;
+        left:0;
+        top:0;
+        width:100vw;
+        height:100vh;
+        background:rgba(0,0,0,0.35);
+        z-index:0;
+        pointer-events:none;
+    }
+    .nav-top{
+        width:100%;
+        height:60px;
+        background:#332c22;
+        display:flex;
+        align-items:center;
+        padding:0;
+        justify-content: space-evenly;
+        position:relative;
+        z-index:2;
+    }
+    .nav-top .title{
+        color:#fff;
+        font-size:20px;
+        font-weight:bold;
+    }
+    .nav-top a{
+        color:#fff;
+        text-decoration:none;
+        padding:8px 16px;
+        border-radius:6px;
+        font-size:14px;
+    }
+    .nav-top a.active{
+        background:#d4b878;
+        color:#222;
+    }
+    .nav-top a:hover{
+        background:#d4b878;
+        color:#222;
+    }
+    .bamboo-top{
+        width:100%;
+        height:18px;
+        background:
+            repeating-linear-gradient(
+                90deg,
+                #d9c7a3 0px,
+                #d9c7a3 48px,
+                #b59868 48px,
+                #b59868 50px
+            );
+        border-bottom:2px solid #a98554;
+        position:relative;
+        z-index:2;
+    }
+    .container{
+        width:900px;
+        margin:40px auto;
+        text-align:center;
+        position:relative;
+        padding:30px 40px 40px;
+        background:
+            linear-gradient(rgba(255,250,240,0.96),rgba(255,250,240,0.96)),
+            url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='none' stroke='%23c9b591' stroke-width='0.5' opacity='0.3'/><path d='M0 100 Q50 90 100 100 T200 100' stroke='%23c9b591' stroke-width='0.5' fill='none' opacity='0.3'/><path d='M100 0 Q90 50 100 100 T100 200' stroke='%23c9b591' stroke-width='0.5' fill='none' opacity='0.3'/></svg>");
+        border:1px solid #c9b591;
+        box-shadow:0 12px 30px rgba(0,0,0,0.35);
+        transform: translateY(-4px);
+        z-index:2;
+    }
+    .vertical-poem{
+        position:absolute;
+        left:12px;
+        top:120px;
+        writing-mode:vertical-rl;
+        text-orientation:upright;
+        font-family:"KaiTi","楷体",serif;
+        font-size:17px;
+        color:#8c3b3b;
+        opacity:0.28;
+        letter-spacing:8px;
+        line-height:2;
+    }
+    .cloud-right{
+        position:absolute;
+        right:15px;
+        top:180px;
+        width:80px;
+        height:180px;
+        opacity:0.18;
+        background-image:
+            radial-gradient(ellipse at 50% 30%, #6b4423 0 2px, transparent 3px),
+            radial-gradient(ellipse at 30% 60%, #6b4423 0 2px, transparent 3px),
+            radial-gradient(ellipse at 70% 80%, #6b4423 0 2px, transparent 3px);
+        background-size:60px 60px;
+        border-left:2px double #8c3b3b;
+    }
+    h1{
+        font-size:42px;
+        color:#8c3b3b;
+        margin-bottom:12px;
+        letter-spacing:8px;
+        font-family:"KaiTi","楷体","Microsoft Yahei",serif;
+        display:inline-block;
+        position:relative;
+    }
+    .seal{
+        display:inline-block;
+        background:#a83232;
+        color:#fff;
+        font-size:16px;
+        padding:4px 10px;
+        margin-left:18px;
+        border-radius:4px;
+        vertical-align:middle;
+        box-shadow:0 0 0 2px #fff,0 0 0 3px #a83232;
+        font-family:"Microsoft Yahei";
+        letter-spacing:2px;
+    }
+    .title-rule{
+        width:620px;
+        height:2px;
+        margin:16px auto 25px;
+        background:linear-gradient(to right,transparent,#8c3b3b 20%,#8c3b3b 80%,transparent);
+        position:relative;
+    }
+    .title-rule::before,
+    .title-rule::after{
+        content:"";
+        position:absolute;
+        top:-4px;
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background:#8c3b3b;
+    }
+    .title-rule::before{left:0;}
+    .title-rule::after{right:0;}
+    .img-box{
+        margin:35px 0;
+        position:relative;
+        z-index:2;
+    }
+    .img-box img{
+        width:320px;
+        height:auto;
+        margin:0 10px;
+        border-radius:6px;
+        box-shadow:0 2px 8px #ccc;
+        transition: all 0.4s ease;
+        border:4px solid #fff;
+        outline:1px solid #b59868;
+        outline-offset:3px;
+    }
+    .img1:hover,.img2:hover{
+        transform: scale(1.08) rotate(3deg);
+        box-shadow: 0px 8px 20px #888888;
+    }
+    .nav{
+        margin:25px 0;
+    }
+    .nav a{
+        display:inline-block;
+        width:180px;
+        height:50px;
+        line-height:50px;
+        background:linear-gradient(#b55555,#8c3b3b);
+        color:#fff;
+        text-decoration:none;
+        border-radius:6px;
+        margin:0 15px;
+        font-size:18px;
+        transition:0.3s;
+        border:1px solid #6e2a2a;
+        box-shadow:0 3px 0 #6e2a2a,0 6px 12px rgba(140,59,59,0.25);
+        font-family:"Microsoft Yahei";
+    }
+    .nav a:hover{
+        background:linear-gradient(#c66666,#9c4444);
+        transform:translateY(-2px);
+        box-shadow:0 5px 0 #6e2a2a,0 10px 18px rgba(140,59,59,0.3);
+    }
+    .desc{
+        margin-top:25px;
+        font-size:18px;
+        padding:16px 40px;
+        color:#5b4636;
+        background:rgba(255,250,240,0.7);
+        border-left:4px double #8c3b3b;
+        border-right:4px double #8c3b3b;
+        display:inline-block;
+        font-family:"Microsoft Yahei";
+    }
+    .back{
+        margin-top:35px;
+    }
+    .back a{
+        color:#8c3b3b;
+        text-decoration:none;
+        font-size:17px;
+        padding-bottom:3px;
+        border-bottom:1px dashed #8c3b3b;
+        transition:0.2s;
+    }
+    .back a:hover{
+        text-decoration:none;
+        border-bottom-style:solid;
+        color:#a83232;
+    }
+    .scroll-footer{
+        margin-top:40px;
+        height:30px;
+        background:
+            linear-gradient(#d9c7a3,#b59868);
+        border-radius:4px;
+        position:relative;
+        box-shadow:0 2px 6px rgba(120,80,40,0.2);
+    }
+    .scroll-footer::before,
+    .scroll-footer::after{
+        content:"";
+        position:absolute;
+        top:-6px;
+        width:16px;
+        height:42px;
+        background:#6e4a22;
+        border-radius:4px;
+        box-shadow:0 2px 4px rgba(0,0,0,0.25);
+    }
+    .scroll-footer::before{left:-8px;}
+    .scroll-footer::after{right:-8px;}
+    .bamboo-bottom{
+        width:100%;
+        height:14px;
+        margin-top:30px;
+        background:
+            repeating-linear-gradient(
+                90deg,
+                #d9c7a3 0px,
+                #d9c7a3 58px,
+                #a98554 58px,
+                #a98554 60px
+            );
+        border-top:2px solid #8c6a34;
+        position:relative;
+        z-index:2;
+    }
+</style>
+</head>
+<body>
+<div class="nav-top">
+    <div class="title">文光载道，诗韵留香</div>
+    <a href="首页.html">首页</a>
+    <a href="诗词沿革.html">诗词沿革</a>
+    <a href="诗境寻踪.html">诗境寻踪</a>
+    <a href="翰墨诗库.html" class="active">翰墨诗库</a>
+    <a href="AI诗韵工坊.html">AI诗韵工坊</a>
+    <a href="诗词闯关.html">诗词闯关</a>
+    <a href="学习打卡.html">学习打卡</a>
+    <a href="关于本站.html">关于本站</a>
+</div>
+<div class="bamboo-top"></div>
+<div class="container">
+    <div class="vertical-poem">
+        潼关怀古<br>忧民千秋
+    </div>
+    <div class="cloud-right"></div>
+    <h1>希孟 — 张养浩<span class="seal">忧世散曲家</span></h1>
+    <div class="title-rule"></div>
+    <div class="img-box">
+        <img class="img1" src="张养浩1.jpg" alt="张养浩1">
+        <img class="img2" src="张养浩2.jpg" alt="张养浩2">
+    </div>
+    <div class="nav">
+        <a href="张养浩介绍.html">人物生平介绍</a>
+        <a href="张养浩精选作品.html">经典诗词作品</a>
+    </div>
+    <p class="desc">
+        元代散曲家，字希孟。心怀苍生，沉郁厚重，代表作《山坡羊·潼关怀古》，道出兴亡百姓之苦。
+    </p>
+    <div class="back">
+        <a href="诗词沿革.html">← 返回诗词沿革</a>
+    </div>
+    <div class="back">
+        <a href="诗境寻踪.html">← 返回诗境寻踪</a>
+    </div>
+</div>
+<div class="bamboo-bottom"></div>
+</body>
+</html>

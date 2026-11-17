@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>张衡经典文句</title>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:"Microsoft Yahei", "SimSun", serif;
+    }
+    body{
+        background-image: url("05.jpg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        color:#444;
+        line-height:1.8;
+        animation: fadeIn 1.2s ease-in-out;
+    }
+    @keyframes fadeIn{
+        from{opacity:0; transform:translateY(20px);}
+        to{opacity:1; transform:translateY(0);}
+    }
+    /* ===== 顶部导航栏（统一版） ===== */
+    .nav-top{
+        width:100%;
+        height:60px;
+        background:#332c22;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:0 30px;
+        gap:30px;
+        position:relative;
+        z-index:10;
+    }
+    .nav-brand{
+        display:flex;
+        align-items:center;
+        gap:20px;
+        flex-shrink:0;
+    }
+    .nav-logo{
+        width:46px;
+        height:46px;
+        border-radius:50%;
+        object-fit:cover;
+        display:block;
+        border:none;
+        overflow:hidden;
+    }
+    .nav-top .title{
+        color:#fff;
+        font-size:25px;
+        font-weight:bold;
+        white-space:nowrap;
+    }
+    .nav-menu{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        flex:1;
+        margin-left:370px;
+        overflow:hidden;
+    }
+    .nav-top a{
+        color:#fff;
+        text-decoration:none;
+        padding:8px 14px;
+        border-radius:7px;
+        font-size:15px;
+        white-space:nowrap;
+    }
+    .nav-top a.active{
+        background:#d4b878;
+        color:#222;
+    }
+    .nav-top a:hover{
+        background:#d4b878;
+        color:#222;
+    }
+    .nav-right{
+        display:flex;
+        align-items:center;
+        gap:16px;
+        flex-shrink:0;
+    }
+    .search-btn{
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        border:1px solid rgba(255,255,255,0.18);
+        background:rgba(255,255,255,0.06);
+        cursor:pointer;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#fff;
+        transition:all 0.25s ease;
+    }
+    .search-btn:hover{
+        background:#d4b878;
+        border-color:#d4b878;
+        color:#222;
+    }
+    .avatar-link{
+        display:block;
+        width:44px;
+        height:44px;
+        border-radius:50%;
+        overflow:hidden;
+        border:2px solid #d4b878;
+        flex-shrink:0;
+        background:#fff;
+        text-decoration:none;
+        position:relative;
+    }
+    .avatar-default{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:22px;
+        color:#332c22;
+        z-index:1;
+    }
+    .avatar-img{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+        z-index:2;
+    }
+    /* 顶部大横幅 */
+    .top-banner{
+        width:900px;
+        margin:40px auto 0;
+        padding:50px 40px;
+        background:
+            linear-gradient(135deg, #6b2d2d 0%, #8c3b3b 40%, #a85555 100%);
+        color:#fff;
+        border-radius:18px 18px 0 0;
+        position:relative;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(139,80,60,0.25);
+        z-index:2;
+    }
+    .top-banner::before{
+        content:"";
+        position:absolute;
+        top:-60px;
+        right:-60px;
+        width:240px;
+        height:240px;
+        background:radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+        border-radius:50%;
+    }
+    .top-banner::after{
+        content:"";
+        position:absolute;
+        bottom:-80px;
+        left:-40px;
+        width:200px;
+        height:200px;
+        background:radial-gradient(circle, rgba(255,220,180,0.15), transparent 70%);
+        border-radius:50%;
+    }
+    .top-banner .english-title{
+        font-size:13px;
+        letter-spacing:8px;
+        opacity:0.85;
+        margin-bottom:12px;
+        position:relative;
+        z-index:2;
+    }
+    .top-banner h1{
+        font-size:46px;
+        font-family:"KaiTi",楷体;
+        letter-spacing:14px;
+        text-shadow:0 4px 12px rgba(0,0,0,0.35);
+        position:relative;
+        z-index:2;
+    }
+    .top-banner .divider-gold{
+        width:140px;
+        height:2px;
+        background:linear-gradient(90deg, transparent, #f5d76e, transparent);
+        margin:16px 0;
+        position:relative;
+        z-index:2;
+    }
+    .top-banner .slogan{
+        font-size:16px;
+        letter-spacing:4px;
+        opacity:0.9;
+        position:relative;
+        z-index:2;
+    }
+    /* 花饰角标 */
+    .flower-corner{
+        position:absolute;
+        width:90px;
+        height:90px;
+        background-repeat:no-repeat;
+        background-size:contain;
+        opacity:0.55;
+        z-index:1;
+    }
+    .flower-corner.left-top{
+        top:20px;
+        left:20px;
+        background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><g fill='%23f5d76e'><circle cx='20' cy='20' r='4'/><circle cx='40' cy='14' r='3'/><circle cx='14' cy='40' r='3'/><path d='M10 50 Q30 30 50 50 T80 50' stroke='%23f5d76e' stroke-width='1' fill='none' opacity='0.6'/></g></svg>");
+    }
+    .flower-corner.right-bottom{
+        bottom:20px;
+        right:20px;
+        background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'><g fill='%23f5d76e'><circle cx='70' cy='70' r='4'/><circle cx='50' cy='76' r='3'/><circle cx='76' cy='50' r='3'/><path d='M40 80 Q60 60 80 80' stroke='%23f5d76e' stroke-width='1' fill='none' opacity='0.6'/></g></svg>");
+    }
+    /* 主容器 */
+    .container{
+        width:900px;
+        margin:0 auto 50px;
+        padding:50px 40px;
+        background:
+            linear-gradient(135deg, #fffdf4, #fbf1dc);
+        border:2px solid #d8b48a;
+        border-top:none;
+        border-radius:0 0 18px 18px;
+        box-shadow:0 12px 40px rgba(139,80,60,0.18);
+        position:relative;
+        z-index:2;
+    }
+    /* 容器四角金线 */
+    .container::before,
+    .container::after{
+        content:"";
+        position:absolute;
+        width:70px;
+        height:70px;
+        border-color:#a85555;
+        border-style:solid;
+    }
+    .container::before{
+        top:16px;
+        left:16px;
+        border-width:4px 0 0 4px;
+        border-radius:10px 0 0 0;
+    }
+    .container::after{
+        bottom:16px;
+        right:16px;
+        border-width:0 4px 4px 0;
+        border-radius:0 0 10px 0;
+    }
+    .corner-gold{
+        position:absolute;
+        width:70px;
+        height:70px;
+        border-color:#c9a876;
+        border-style:solid;
+    }
+    .corner-gold.top-right{
+        top:16px;
+        right:16px;
+        border-width:4px 4px 0 0;
+        border-radius:0 10px 0 0;
+    }
+    .corner-gold.bottom-left{
+        bottom:16px;
+        left:16px;
+        border-width:0 0 4px 4px;
+        border-radius:0 0 0 10px;
+    }
+    /* 印章 */
+    .seal{
+        position:absolute;
+        top:40px;
+        right:40px;
+        width:80px;
+        height:80px;
+        border:4px solid #b54a4a;
+        border-radius:12px;
+        color:#b54a4a;
+        text-align:center;
+        line-height:24px;
+        font-family:"KaiTi",楷体;
+        font-weight:bold;
+        transform:rotate(-10deg);
+        background:rgba(255,255,255,0.92);
+        box-shadow:0 4px 12px rgba(181,74,74,0.3);
+        z-index:3;
+    }
+    .seal span{
+        display:block;
+        font-size:22px;
+        letter-spacing:2px;
+        margin-top:10px;
+    }
+    /* 标题区 */
+    .title-wrap{
+        text-align:center;
+        margin-bottom:30px;
+    }
+    .title-tag{
+        display:inline-block;
+        padding:4px 14px;
+        background:#a85555;
+        color:#fff;
+        font-size:13px;
+        letter-spacing:4px;
+        border-radius:20px;
+        margin-bottom:14px;
+    }
+    h2{
+        color:#6b2d2d;
+        font-size:34px;
+        font-family:"KaiTi",楷体;
+        letter-spacing:6px;
+        text-shadow:0 2px 6px rgba(168,85,85,0.15);
+    }
+    .subtitle-line{
+        color:#8c7b6b;
+        font-size:14px;
+        letter-spacing:3px;
+        margin-top:8px;
+    }
+    /* 云纹分隔 */
+    .cloud-divider{
+        text-align:center;
+        margin:30px 0;
+        color:#a85555;
+        font-size:22px;
+        letter-spacing:14px;
+        opacity:0.55;
+    }
+    /* 标签组 */
+    .tag-group{
+        display:flex;
+        flex-wrap:wrap;
+        gap:10px;
+        justify-content:center;
+        margin-bottom:30px;
+    }
+    .tag{
+        padding:7px 16px;
+        background:#f9e9cf;
+        border:1px solid #d8b48a;
+        border-radius:24px;
+        font-size:14px;
+        color:#8c3b3b;
+        font-family:"KaiTi",楷体;
+        letter-spacing:2px;
+        transition:0.3s;
+    }
+    .tag:hover{
+        background:#a85555;
+        color:#fff;
+        transform:translateY(-3px);
+        box-shadow:0 6px 14px rgba(168,85,85,0.3);
+    }
+    /* 诗词卡片 */
+    .poem-card{
+        margin-bottom:30px;
+        padding:30px;
+        background:
+            linear-gradient(135deg, #fff8e7, #fbe9c4);
+        border:1px solid #e1c592;
+        border-radius:14px;
+        position:relative;
+        box-shadow:0 6px 18px rgba(168,130,90,0.15);
+        transition:0.4s;
+    }
+    .poem-card:hover{
+        transform:translateY(-6px);
+        box-shadow:0 12px 28px rgba(168,85,85,0.2);
+    }
+    .poem-card::before,
+    .poem-card::after{
+        content:"";
+        position:absolute;
+        left:20px;
+        right:20px;
+        height:3px;
+        background:linear-gradient(90deg, transparent, #c9a876, transparent);
+    }
+    .poem-card::before{top:10px;}
+    .poem-card::after{bottom:10px;}
+    .poem-card-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:16px;
+        padding-bottom:12px;
+        border-bottom:1px dashed #c9a876;
+    }
+    .poem-name{
+        font-family:"KaiTi",楷体;
+        font-size:24px;
+        color:#8c3b3b;
+        letter-spacing:3px;
+    }
+    .poem-label{
+        padding:3px 10px;
+        background:#8c3b3b;
+        color:#fff;
+        font-size:12px;
+        border-radius:12px;
+        letter-spacing:2px;
+    }
+    .poem-img-box{
+        width:100%;
+        height:280px;
+        margin:15px 0;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .poem-img-box img{
+        max-width:100%;
+        max-height:100%;
+        border-radius:10px;
+        border:4px solid #f1e9df;
+        box-shadow:0 4px 12px rgba(0,0,0,0.12);
+    }
+    .poem-content{
+        font-family:"KaiTi",楷体;
+        font-size:19px;
+        line-height:2.1;
+        color:#444;
+        padding:10px 0;
+    }
+    .poem-content p{
+        text-indent:0;
+        margin-bottom:6px;
+    }
+    .poem-footer{
+        margin-top:16px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .poem-note{
+        font-size:13px;
+        color:#8c7b6b;
+        letter-spacing:2px;
+    }
+    .poem-link{
+        display:inline-block;
+        padding:8px 20px;
+        background:linear-gradient(135deg, #a85555, #8c3b3b);
+        color:#fff;
+        text-decoration:none;
+        border-radius:24px;
+        font-size:14px;
+        letter-spacing:2px;
+        box-shadow:0 4px 10px rgba(168,85,85,0.3);
+        transition:0.3s;
+    }
+    .poem-link:hover{
+        background:linear-gradient(135deg, #8c3b3b, #6b2d2d);
+        transform:translateY(-2px);
+        box-shadow:0 8px 18px rgba(168,85,85,0.4);
+    }
+    /* 华丽佳句区 */
+    .grand-quote{
+        margin:40px 0;
+        padding:40px;
+        background:
+            linear-gradient(135deg, #6b2d2d, #8c3b3b);
+        color:#fff;
+        border-radius:16px;
+        position:relative;
+        overflow:hidden;
+        box-shadow:0 10px 28px rgba(139,60,40,0.3);
+    }
+    .grand-quote::before{
+        content:"";
+        position:absolute;
+        top:-30px;
+        right:-30px;
+        width:180px;
+        height:180px;
+        background:radial-gradient(circle, rgba(245,215,110,0.25), transparent 70%);
+        border-radius:50%;
+    }
+    .grand-quote .quote-title{
+        font-size:14px;
+        letter-spacing:6px;
+        opacity:0.85;
+        margin-bottom:14px;
+        position:relative;
+        z-index:2;
+    }
+    .grand-quote p{
+        font-family:"KaiTi",楷体;
+        font-size:24px;
+        line-height:2;
+        letter-spacing:2px;
+        text-indent:0;
+        position:relative;
+        z-index:2;
+    }
+    .grand-quote span{
+        display:block;
+        margin-top:16px;
+        font-size:14px;
+        opacity:0.8;
+        text-align:right;
+        letter-spacing:3px;
+        position:relative;
+        z-index:2;
+    }
+    /* 返回按钮 */
+    .back{
+        margin-top:40px;
+        text-align:center;
+    }
+    .back a{
+        display:inline-block;
+        padding:14px 40px;
+        color:#fff;
+        background:linear-gradient(135deg, #a85555, #6b2d2d);
+        text-decoration:none;
+        font-size:18px;
+        border-radius:40px;
+        letter-spacing:6px;
+        box-shadow:0 10px 24px rgba(168,85,85,0.35);
+        border:2px solid #f5d76e;
+        transition:0.4s;
+    }
+    .back a:hover{
+        background:linear-gradient(135deg, #8c3b3b, #4a1f1f);
+        transform:translateY(-4px);
+        box-shadow:0 16px 32px rgba(168,85,85,0.45);
+    }
+    /* 页脚 */
+    .page-footer{
+        text-align:center;
+        margin-top:40px;
+        padding-top:24px;
+        border-top:1px dashed #c9a876;
+        color:#8c7b6b;
+        font-size:14px;
+        letter-spacing:3px;
+    }
+    /* 视频弹窗样式 */
+    .video-modal{
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.8);
+        z-index:999;
+        align-items:center;
+        justify-content:center;
+    }
+    .video-box{
+        width:800px;
+        max-width:90%;
+        position:relative;
+    }
+    .video-box video{
+        width:100%;
+        border-radius:12px;
+    }
+    .close-btn{
+        position:absolute;
+        top:-32px;
+        right:0;
+        color:#fff;
+        font-size:28px;
+        cursor:pointer;
+    }
+
+    /* ========== 搜索弹窗样式【古风改版】 ========== */
+    .search-mask{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(0,0,0,0.55);
+        z-index:99;
+        display:none;
+        align-items:center;
+        justify-content:center;
+    }
+    .search-dialog{
+        width:620px;
+        background:#f8f3e8;
+        border-radius:14px;
+        padding:36px;
+        box-shadow:0 10px 35px rgba(0,0,0,0.25);
+        position:relative;
+        border:2px solid #b89b6b;
+        background-image: linear-gradient(rgba(232,222,206,0.25),rgba(232,222,206,0.25));
+    }
+    .search-dialog .tip-text{
+        font-size:20px;
+        color:#5c3f24;
+        margin-bottom:24px;
+        letter-spacing:2px;
+    }
+    .search-input{
+        width:100%;
+        height:52px;
+        border:2px solid #9c7d54;
+        border-radius:9px;
+        padding:0 18px;
+        font-size:17px;
+        outline:none;
+        background:#fffbf4;
+        color:#443322;
+    }
+    .search-input:focus{
+        border-color:#b89b6b;
+        box-shadow:0 0 0 3px rgba(184,155,107,0.22);
+    }
+    .search-tip-err{
+        color:#a83838;
+        font-size:15px;
+        margin-top:10px;
+        min-height:20px;
+    }
+    .suggest-panel{
+        position:absolute;
+        left:36px;
+        right:36px;
+        top:170px;
+        background:#fffbf4;
+        border:2px solid #9c7d54;
+        border-top:0;
+        border-radius:0 0 9px 9px;
+        box-shadow:0 6px 16px rgba(0,0,0,0.12);
+        z-index:100;
+        display:none;
+        max-height:320px;
+        overflow-y:auto;
+    }
+    .suggest-item{
+        display:flex;
+        align-items:center;
+        padding:13px 18px;
+        font-size:16px;
+        color:#5c3f24;
+        cursor:pointer;
+        gap:12px;
+    }
+    .suggest-item:hover{
+        background:#efe6d7;
+    }
+    .suggest-item .icon{
+        color:#9c7d54;
+    }
+    .suggest-empty{
+        padding:20px;
+        text-align:center;
+        color:#887052;
+        font-size:15px;
+    }
+    .search-btn-group{
+        display:flex;
+        justify-content:flex-end;
+        gap:18px;
+        margin-top:28px;
+    }
+    .confirm-btn{
+        width:106px;
+        height:46px;
+        background:#8c6b44;
+        color:#fff;
+        border:none;
+        border-radius:8px;
+        font-size:17px;
+        cursor:pointer;
+        letter-spacing:1px;
+    }
+    .cancel-btn{
+        width:106px;
+        height:46px;
+        background:#d9c9b3;
+        color:#443322;
+        border:none;
+        border-radius:8px;
+        font-size:17px;
+        cursor:pointer;
+        letter-spacing:1px;
+    }
+    .confirm-btn:hover{
+        background:#725636;
+    }
+    .cancel-btn:hover{
+        background:#c9b89f;
+    }
+</style>
+</head>
+<body>
+<!-- 顶部导向导航栏（统一版） -->
+<div class="nav-top">
+    <div class="nav-brand">
+        <img src="logo2.png" alt="Logo" class="nav-logo">
+        <div class="title">文光载道，诗韵留香</div>
+    </div>
+    <div class="nav-menu">
+        <a href="首页.html">首页</a>
+        <a href="诗词沿革.html">诗词沿革</a>
+        <a href="诗境寻踪.html">诗境寻踪</a>
+        <a href="翰墨诗库.html" class="active">翰墨诗库</a>
+        <a href="AI诗韵工坊.html">AI诗韵工坊</a>
+        <a href="诗词闯关.html">诗词闯关</a>
+        <a href="学习打卡.html">学习打卡</a>
+        <a href="关于本站.html">关于本站</a>
+    </div>
+    <div class="nav-right">
+        <button class="search-btn" title="搜索">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="6"></circle>
+                <line x1="21" y1="21" x2="16.8" y2="16.8"></line>
+            </svg>
+        </button>
+        <a href="主页.html" class="avatar-link" title="点击进入个人主页">
+            <span class="avatar-default" id="avatarDefault">👤</span>
+            <img class="avatar-img" id="avatarImg" alt="用户头像">
+        </a>
+    </div>
+</div>
+    <div class="top-banner">
+        <div class="flower-corner left-top"></div>
+        <div class="flower-corner right-bottom"></div>
+        <div class="english-title">ZHANG HENG · COLLECTION</div>
+        <h1>张衡经典文句</h1>
+        <div class="divider-gold"></div>
+        <div class="slogan">观象测天，辞赋昭华</div>
+    </div>
+    <div class="container">
+        <div class="corner-gold.top-right"></div>
+        <div class="corner-gold.bottom-left"></div>
+        <div class="seal">
+            <span>平子</span>
+            <span>灵宪</span>
+        </div>
+        <div class="title-wrap">
+            <div class="title-tag">张衡精选</div>
+            <h2>张 衡 语 录</h2>
+            <div class="subtitle-line">ZHANG HENG · SELECTED QUOTATIONS</div>
+        </div>
+        <div class="tag-group">
+            <span class="tag">二京赋</span>
+            <span class="tag">归田赋</span>
+            <span class="tag">灵宪</span>
+            <span class="tag">四愁诗</span>
+            <span class="tag">南阳平子</span>
+        </div>
+        <div class="cloud-divider">❋ ❋ ❋</div>
+        <div class="poem-card">
+            <div class="poem-card-header">
+                <div class="poem-name">《四愁诗》</div>
+                <div class="poem-label">古诗名篇</div>
+            </div>
+            <div class="poem-img-box">
+                <img src="四愁诗.jpg" alt="四愁诗配图">
+            </div>
+            <div class="poem-content">
+                <p>我所思兮在太山，欲往从之梁父艰。</p>
+            </div>
+            <div class="poem-footer">
+                <span class="poem-note">东汉 · 张衡</span>
+                <a class="poem-link" onclick="openVideo('四愁诗.mp4')">观看讲解</a>
+            </div>
+        </div>
+        <div class="poem-card">
+            <div class="poem-card-header">
+                <div class="poem-name">《归田赋》</div>
+                <div class="poem-label">赋名篇</div>
+            </div>
+            <div class="poem-img-box">
+                <img src="归田赋.jpg" alt="归田赋配图">
+            </div>
+            <div class="poem-content">
+                <p>于是仲春令月，时和气清。</p>
+            </div>
+            <div class="poem-footer">
+                <span class="poem-note">东汉 · 张衡</span>
+                <a class="poem-link" onclick="openVideo('归田赋.mp4')">观看讲解</a>
+            </div>
+        </div>
+        <div class="poem-card">
+            <div class="poem-card-header">
+                <div class="poem-name">《二京赋》</div>
+                <div class="poem-label">大赋名篇</div>
+            </div>
+            <div class="poem-img-box">
+                <img src="二京赋.jpg" alt="二京赋配图">
+            </div>
+            <div class="poem-content">
+                <p>苟好奢而失度，岂谓皇而作程。</p>
+            </div>
+            <div class="poem-footer">
+                <span class="poem-note">东汉 · 张衡</span>
+                <a class="poem-link" onclick="openVideo('二京赋.mp4')">观看讲解</a>
+            </div>
+        </div>
+        <div class="poem-card">
+            <div class="poem-card-header">
+                <div class="poem-name">《灵宪》</div>
+                <div class="poem-label">天文名篇</div>
+            </div>
+            <div class="poem-img-box">
+                <img src="灵宪.jpg" alt="灵宪配图">
+            </div>
+            <div class="poem-content">
+                <p>宇之表无极，宙之端无穷。</p>
+            </div>
+            <div class="poem-footer">
+                <span class="poem-note">东汉 · 张衡</span>
+                <a class="poem-link" onclick="openVideo('天文.mp4')">观看讲解</a>
+            </div>
+        </div>
+        <div class="cloud-divider">❋ ❋ ❋</div>
+        <div class="grand-quote">
+            <div class="quote-title">精 选 名 句</div>
+            <p>美人赠我金错刀，何以报之英琼瑶。</p>
+            <span>——《四愁诗》</span>
+        </div>
+        <div class="back">
+            <a href="翰墨诗库.html">返 回 翰 墨 诗 库</a>
+        </div>
+        <div class="back">
+            <a href="张衡.html">返 回 人 物</a>
+        </div>
+        <div class="page-footer">
+            诗文清雅 · 品读先贤 · 传承经典
+        </div>
+    </div>
+
+<!-- 搜索弹窗HTML，增加联想下拉 + 错误提示 -->
+<div class="search-mask" id="searchMask">
+    <div class="search-dialog">
+        <div class="tip-text">请输入诗词、作者或标题进行搜索：</div>
+        <input type="text" class="search-input" id="searchInput" placeholder="例如：李白、静夜思">
+        <div class="search-tip-err" id="errTip"></div>
+        <div class="suggest-panel" id="suggestPanel"></div>
+        <div class="search-btn-group">
+            <button class="confirm-btn" id="searchConfirm">确定</button>
+            <button class="cancel-btn" id="searchCancel">取消</button>
+        </div>
+    </div>
+</div>
+
+<!-- 弹窗HTML + JS -->
+<div class="video-modal" id="videoModal">
+ <div class="video-box">
+ <span class="close-btn" onclick="closeVideo()">×</span>
+ <video id="myVideo" controls>
+ <source src="" type="video/mp4">
+ </video>
+ </div>
+</div>
+<script>
+const modal = document.getElementById('videoModal');
+const video = document.getElementById('myVideo');
+function openVideo(src){
+ video.src = src;
+ modal.style.display = 'flex';
+ video.play();
+}
+function closeVideo(){
+ modal.style.display = 'none';
+ video.pause();
+ video.src = "";
+}
+modal.onclick = function(e){
+ if(e.target === modal) closeVideo();
+}
+</script>
+
+<script>
+// ========== 搜索弹窗逻辑 + 联想 + 错误提示 ==========
+const searchBtn = document.querySelector('.search-btn');
+const searchMask = document.getElementById('searchMask');
+const searchInput = document.getElementById('searchInput');
+const searchConfirm = document.getElementById('searchConfirm');
+const searchCancel = document.getElementById('searchCancel');
+const suggestPanel = document.getElementById('suggestPanel');
+const errTip = document.getElementById('errTip');
+
+// 搜索数据源，修正诗人link，诗人跳转XX.html，诗词跳转精选作品
+const searchData = [
+  // 张养浩
+  {type:"poem",name:"山坡羊·潼关怀古",searchText:"山坡羊潼关怀古 峰峦如聚 伤心秦汉经行处",link:"张养浩精选作品.html"},
+  {type:"poem",name:"山坡羊·骊山怀古",searchText:"山坡羊骊山怀古",link:"张养浩精选作品.html"},
+  {type:"poem",name:"水仙子",searchText:"水仙子",link:"张养浩精选作品.html"},
+  {type:"poet",name:"张养浩",searchText:"张养浩",link:"张养浩.html"},
+  // 王实甫
+  {type:"poem",name:"西厢记",searchText:"西厢记 碧云天 总是离人泪",link:"王实甫精选作品.html"},
+  {type:"poem",name:"丽春堂",searchText:"丽春堂",link:"王实甫精选作品.html"},
+  {type:"poem",name:"破窑记",searchText:"破窑记",link:"王实甫精选作品.html"},
+  {type:"poet",name:"王实甫",searchText:"王实甫",link:"王实甫.html"},
+  // 郑光祖
+  {type:"poem",name:"倩女离魂",searchText:"倩女离魂",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"王粲登楼",searchText:"王粲登楼",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"㑇梅香",searchText:"㑇梅香",link:"郑光祖精选作品.html"},
+  {type:"poem",name:"周公摄政",searchText:"周公摄政",link:"郑光祖精选作品.html"},
+  {type:"poet",name:"郑光祖",searchText:"郑光祖",link:"郑光祖.html"},
+  // 马致远
+  {type:"poem",name:"天净沙·秋思",searchText:"天净沙秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"汉宫秋",searchText:"汉宫秋",link:"马致远精选作品.html"},
+  {type:"poem",name:"双调夜行船·秋思",searchText:"双调夜行船秋思",link:"马致远精选作品.html"},
+  {type:"poem",name:"寿阳曲·江天暮雪",searchText:"寿阳曲江天暮雪",link:"马致远精选作品.html"},
+  {type:"poet",name:"马致远",searchText:"马致远",link:"马致远.html"},
+  // 关汉卿
+  {type:"poem",name:"窦娥冤",searchText:"窦娥冤",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"单刀会",searchText:"单刀会",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"救风尘",searchText:"救风尘",link:"关汉卿精选作品.html"},
+  {type:"poem",name:"南吕一枝花·不服老",searchText:"南吕一枝花不服老",link:"关汉卿精选作品.html"},
+  {type:"poet",name:"关汉卿",searchText:"关汉卿",link:"关汉卿.html"},
+  // 欧阳修
+  {type:"poem",name:"醉翁亭记",searchText:"醉翁亭记",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"蝶恋花·庭院深深深几许",searchText:"蝶恋花 庭院深深深几许",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"生查子·元夕",searchText:"生查子元夕",link:"欧阳修精选作品.html"},
+  {type:"poem",name:"浪淘沙·把酒祝东风",searchText:"浪淘沙把酒祝东风",link:"欧阳修精选作品.html"},
+  {type:"poet",name:"欧阳修",searchText:"欧阳修",link:"欧阳修.html"},
+  // 陆游
+  {type:"poem",name:"示儿",searchText:"示儿",link:"陆游精选作品.html"},
+  {type:"poem",name:"游山西村",searchText:"游山西村",link:"陆游精选作品.html"},
+  {type:"poem",name:"书愤",searchText:"书愤",link:"陆游精选作品.html"},
+  {type:"poem",name:"钗头凤·红酥手",searchText:"钗头凤红酥手",link:"陆游精选作品.html"},
+  {type:"poet",name:"陆游",searchText:"陆游",link:"陆游.html"},
+  // 柳永
+  {type:"poem",name:"雨霖铃·寒蝉凄切",searchText:"雨霖铃寒蝉凄切",link:"柳永精选作品.html"},
+  {type:"poem",name:"蝶恋花·伫倚危楼风细细",searchText:"蝶恋花伫倚危楼风细细",link:"柳永精选作品.html"},
+  {type:"poem",name:"八声甘州·对潇潇暮雨洒江天",searchText:"八声甘州对潇潇暮雨洒江天",link:"柳永精选作品.html"},
+  {type:"poem",name:"望海潮·东南形胜",searchText:"望海潮东南形胜",link:"柳永精选作品.html"},
+  {type:"poet",name:"柳永",searchText:"柳永",link:"柳永.html"},
+  // 李清照
+  {type:"poem",name:"醉花阴·薄雾浓云愁永昼",searchText:"醉花阴薄雾浓云愁永昼",link:"poem.html"},
+  {type:"poem",name:"声声慢·寻寻觅觅",searchText:"声声慢寻寻觅觅",link:"poem.html"},
+  {type:"poem",name:"一剪梅·红藕香残玉簟秋",searchText:"一剪梅红藕香残玉簟秋",link:"poem.html"},
+  {type:"poem",name:"夏日绝句",searchText:"夏日绝句",link:"poem.html"},
+  {type:"poet",name:"李清照",searchText:"李清照",link:"李清照.html"},
+  // 辛弃疾
+  {type:"poem",name:"破阵子·为陈同甫赋壮词以寄之",searchText:"破阵子为陈同甫赋壮词以寄之",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"青玉案·元夕",searchText:"青玉案元夕",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"永遇乐·京口北固亭怀古",searchText:"永遇乐京口北固亭怀古",link:"辛弃疾精选作品.html"},
+  {type:"poem",name:"南乡子·登京口北固亭有怀",searchText:"南乡子登京口北固亭有怀",link:"辛弃疾精选作品.html"},
+  {type:"poet",name:"辛弃疾",searchText:"辛弃疾",link:"辛弃疾.html"},
+  // 苏轼
+  {type:"poem",name:"念奴娇·赤壁怀古",searchText:"念奴娇赤壁怀古",link:"su_poem.html"},
+  {type:"poem",name:"水调歌头·明月几时有",searchText:"水调歌头明月几时有",link:"su_poem.html"},
+  {type:"poem",name:"定风波·莫听穿林打叶声",searchText:"定风波莫听穿林打叶声",link:"su_poem.html"},
+  {type:"poem",name:"江城子·乙卯正月二十日夜记梦",searchText:"江城子乙卯正月二十日夜记梦",link:"su_poem.html"},
+  {type:"poet",name:"苏轼",searchText:"苏轼",link:"苏轼.html"},
+  // 李商隐
+  {type:"poem",name:"无题·相见时难别亦难",searchText:"无题相见时难别亦难",link:"李商隐精选作品.html"},
+  {type:"poem",name:"锦瑟",searchText:"锦瑟",link:"李商隐精选作品.html"},
+  {type:"poem",name:"夜雨寄北",searchText:"夜雨寄北",link:"李商隐精选作品.html"},
+  {type:"poem",name:"登乐游原",searchText:"登乐游原",link:"李商隐精选作品.html"},
+  {type:"poet",name:"李商隐",searchText:"李商隐",link:"李商隐.html"},
+  // 韩愈
+  {type:"poem",name:"师说",searchText:"师说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"马说",searchText:"马说",link:"韩愈精选作品.html"},
+  {type:"poem",name:"左迁至蓝关示侄孙湘",searchText:"左迁至蓝关示侄孙湘",link:"韩愈精选作品.html"},
+  {type:"poem",name:"进学解",searchText:"进学解",link:"韩愈精选作品.html"},
+  {type:"poet",name:"韩愈",searchText:"韩愈",link:"韩愈.html"},
+  // 白居易
+  {type:"poem",name:"琵琶行",searchText:"琵琶行",link:"bai_s.html"},
+  {type:"poem",name:"长恨歌",searchText:"长恨歌",link:"bai_s.html"},
+  {type:"poem",name:"钱塘湖春行",searchText:"钱塘湖春行",link:"bai_s.html"},
+  {type:"poet",name:"白居易",searchText:"白居易",link:"白居易.html"},
+  // 王维
+  {type:"poem",name:"山居秋暝",searchText:"山居秋暝",link:"王维精选作品.html"},
+  {type:"poem",name:"使至塞上",searchText:"使至塞上",link:"王维精选作品.html"},
+  {type:"poem",name:"鸟鸣涧",searchText:"鸟鸣涧",link:"王维精选作品.html"},
+  {type:"poem",name:"鹿柴",searchText:"鹿柴",link:"王维精选作品.html"},
+  {type:"poet",name:"王维",searchText:"王维",link:"王维.html"},
+  // 杜甫
+  {type:"poem",name:"登高",searchText:"登高",link:"du_s.html"},
+  {type:"poem",name:"春望",searchText:"春望",link:"du_s.html"},
+  {type:"poem",name:"茅屋为秋风所破歌",searchText:"茅屋为秋风所破歌",link:"du_s.html"},
+  {type:"poet",name:"杜甫",searchText:"杜甫",link:"杜甫.html"},
+  // 李白
+  {type:"poem",name:"将进酒",searchText:"将进酒",link:"libai_s.html"},
+  {type:"poem",name:"行路难·其一",searchText:"行路难其一",link:"libai_s.html"},
+  {type:"poem",name:"渡荆门送别",searchText:"渡荆门送别",link:"libai_s.html"},
+  {type:"poet",name:"李白",searchText:"李白",link:"李白.html"},
+  // 谢灵运
+  {type:"poem",name:"泰山吟",searchText:"泰山吟",link:"xie_s.html"},
+  {type:"poem",name:"拟嵇中散咏松诗",searchText:"拟嵇中散咏松诗",link:"xie_s.html"},
+  {type:"poem",name:"登池上楼",searchText:"登池上楼",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"石壁精舍还湖中作",searchText:"石壁精舍还湖中作",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"入彭蠡湖口",searchText:"入彭蠡湖口",link:"谢灵运精选作品.html"},
+  {type:"poem",name:"山居赋",searchText:"山居赋",link:"谢灵运精选作品.html"},
+  {type:"poet",name:"谢灵运",searchText:"谢灵运",link:"谢灵运.html"},
+// 陶渊明
+  {type:"poem",name:"饮酒·其五",searchText:"饮酒其五",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归园田居·其一",searchText:"归园田居其一",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"归去来兮辞",searchText:"归去来兮辞",link:"陶渊明精选作品.html"},
+  {type:"poem",name:"杂诗",searchText:"杂诗",link:"陶渊明精选作品.html"},
+  {type:"poet",name:"陶渊明",searchText:"陶渊明",link:"陶渊明.html"},
+  // 曹植
+  {type:"poem",name:"白马篇",searchText:"白马篇",link:"曹植精选作品.html"},
+  {type:"poem",name:"洛神赋",searchText:"洛神赋",link:"曹植精选作品.html"},
+  {type:"poem",name:"七步诗",searchText:"七步诗",link:"曹植精选作品.html"},
+  {type:"poem",name:"七哀诗",searchText:"七哀诗",link:"曹植精选作品.html"},
+  {type:"poet",name:"曹植",searchText:"曹植",link:"曹植.html"},
+  // 曹丕
+  {type:"poem",name:"燕歌行",searchText:"燕歌行",link:"曹丕精选作品.html"},
+  {type:"poem",name:"典论·论文",searchText:"典论论文",link:"曹丕精选作品.html"},
+  {type:"poem",name:"杂诗二首·其一",searchText:"杂诗二首其一",link:"曹丕精选作品.html"},
+  {type:"poem",name:"善哉行",searchText:"善哉行",link:"曹丕精选作品.html"},
+  {type:"poet",name:"曹丕",searchText:"曹丕",link:"曹丕.html"},
+  // 屈原
+  {type:"poem",name:"离骚",searchText:"离骚",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·湘夫人",searchText:"九歌湘夫人",link:"屈原精选作品.html"},
+  {type:"poem",name:"九歌·国殇",searchText:"九歌国殇",link:"屈原精选作品.html"},
+  {type:"poem",name:"九章·橘颂",searchText:"九章橘颂",link:"屈原精选作品.html"},
+  {type:"poet",name:"屈原",searchText:"屈原",link:"屈原.html"},
+  // 论语
+  {type:"poem",name:"论语·学而",searchText:"论语学而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·为政",searchText:"论语为政",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·述而",searchText:"论语述而",link:"孔子精选作品.html"},
+  {type:"poem",name:"论语·颜渊",searchText:"论语颜渊",link:"孔子精选作品.html"},
+  // 孟子
+  {type:"poem",name:"孟子·公孙丑上",searchText:"孟子公孙丑上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·告子上",searchText:"孟子告子上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·离娄上",searchText:"孟子离娄上",link:"孟子精选作品.html"},
+  {type:"poem",name:"孟子·尽心下",searchText:"孟子尽心下",link:"孟子精选作品.html"},
+  // 司马迁
+  {type:"poem",name:"史记·陈涉世家",searchText:"史记陈涉世家",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·项羽本纪",searchText:"史记项羽本纪",link:"司马迁精选作品.html"},
+  {type:"poem",name:"史记·太史公自序",searchText:"史记太史公自序",link:"司马迁精选作品.html"},
+  {type:"poet",name:"司马迁",searchText:"司马迁",link:"司马迁.html"},
+  // 荀子
+  {type:"poem",name:"荀子·天论",searchText:"荀子天论",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·性恶",searchText:"荀子性恶",link:"荀子精选作品.html"},
+  {type:"poem",name:"荀子·劝学",searchText:"荀子劝学",link:"荀子精选作品.html"},
+  {type:"poet",name:"荀子",searchText:"荀子",link:"荀子.html"},
+  // 贾谊
+  {type:"poem",name:"过秦论",searchText:"过秦论",link:"贾谊精选作品.html"},
+  {type:"poem",name:"鵩鸟赋",searchText:"鵩鸟赋",link:"贾谊精选作品.html"},
+  {type:"poem",name:"惜誓",searchText:"惜誓",link:"贾谊精选作品.html"},
+  {type:"poem",name:"治安策",searchText:"治安策",link:"贾谊精选作品.html"},
+  {type:"poet",name:"贾谊",searchText:"贾谊",link:"贾谊.html"},
+  // 司马相如
+  {type:"poem",name:"子虚赋",searchText:"子虚赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"上林赋",searchText:"上林赋",link:"司马相如精选作品.html"},
+  {type:"poem",name:"凤求凰",searchText:"凤求凰",link:"司马相如精选作品.html"},
+  {type:"poet",name:"司马相如",searchText:"司马相如",link:"司马相如.html"},
+  {type:"poem",name:"长门赋",searchText:"长门赋",link:"司马相如精选作品.html"},
+  // 李陵
+  {type:"poem",name:"报任安书",searchText:"报任安书",link:"司马迁精选作品.html"},
+
+  {type:"poem",name:"二京赋",searchText:"二京赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"归田赋",searchText:"归田赋",link:"张衡精选作品.html"},
+  {type:"poem",name:"灵宪",searchText:"灵宪",link:"张衡精选作品.html"},
+  {type:"poet",name:"张衡",searchText:"张衡",link:"张衡.html"},
+  {type:"poem",name:"四愁诗",searchText:"四愁诗",link:"张衡精选作品.html"},
+  // 班固
+  {type:"poem",name:"两都赋",searchText:"两都赋",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·司马迁传",searchText:"汉书司马迁传",link:"班固精选作品.html"},
+  {type:"poem",name:"汉书·董仲舒传",searchText:"汉书董仲舒传",link:"班固精选作品.html"},
+  {type:"poet",name:"班固",searchText:"班固",link:"班固.html"},
+  {type:"poem",name:"咏史",searchText:"咏史",link:"班固精选作品.html"},
+  // 扬雄
+  {type:"poem",name:"解嘲",searchText:"解嘲",link:"扬雄精选作品.html"},
+  {type:"poem",name:"太玄经",searchText:"太玄经",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·吾子",searchText:"法言吾子",link:"扬雄精选作品.html"},
+  {type:"poem",name:"法言·学行",searchText:"法言学行",link:"扬雄精选作品.html"},
+  {type:"poet",name:"扬雄",searchText:"扬雄",link:"扬雄.html"},
+  // 曹操
+  {type:"poem",name:"蒿里行",searchText:"蒿里行",link:"曹操精选作品.html"},
+  {type:"poem",name:"短歌行",searchText:"短歌行",link:"曹操精选作品.html"},
+
+  {type:"poem",name:"龟虽寿",searchText:"龟虽寿",link:"曹操精选作品.html"},
+  {type:"poem",name:"观沧海",searchText:"观沧海",link:"曹操精选作品.html"},
+  {type:"poet",name:"曹操",searchText:"曹操",link:"曹操.html"},
+  // 朝代
+  {type:"dynasty",name:"先秦",searchText:"先秦",link:"翰墨诗库.html?key=先秦"},
+  {type:"dynasty",name:"汉代",searchText:"汉代",link:"翰墨诗库.html?key=汉代"},
+  {type:"dynasty",name:"魏晋南北朝",searchText:"魏晋南北朝",link:"翰墨诗库.html?key=魏晋南北朝"},
+  {type:"dynasty",name:"唐朝",searchText:"唐朝",link:"翰墨诗库.html?key=唐朝"},
+  {type:"dynasty",name:"宋朝",searchText:"宋朝",link:"翰墨诗库.html?key=宋朝"},
+  {type:"dynasty",name:"元朝",searchText:"元朝",link:"翰墨诗库.html?key=元朝"},
+];
+
+
+// 模糊筛选，支持匹配name和searchText，诗人优先排在前面
+function getSuggestList(keyword){
+  if(!keyword.trim()) return [];
+  const kw = keyword.trim().toLowerCase();
+  const matchAll = searchData.filter(item=> 
+    item.name.toLowerCase().includes(kw) || item.searchText.toLowerCase().includes(kw)
+  );
+  // 诗人优先，诗词其次，朝代放最后
+  const poetList = matchAll.filter(i=>i.type==="poet");
+  const poemList = matchAll.filter(i=>i.type==="poem");
+  const dynastyList = matchAll.filter(i=>i.type==="dynasty");
+  return [...poetList,...poemList,...dynastyList];
+}
+
+// 渲染联想下拉
+function renderSuggest(list){
+  if(list.length ===0){
+    suggestPanel.innerHTML = `<div class="suggest-empty">无相关结果</div>`;
+  }else{
+    suggestPanel.innerHTML = list.map(item=>`
+      <div class="suggest-item" data-link="${item.link}">
+        <span class="icon">🔍</span>
+        <span>${item.name}</span>
+      </div>
+    `).join("");
+    document.querySelectorAll(".suggest-item").forEach(el=>{
+      el.onclick = ()=>{
+        location.href = el.dataset.link;
+      }
+    })
+  }
+  suggestPanel.style.display = "block";
+}
+
+// 打开弹窗
+searchBtn.onclick = function(){
+    searchMask.style.display = 'flex';
+    searchInput.value = '';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+    searchInput.focus();
+}
+// 关闭弹窗
+function closeSearchDialog(){
+    searchMask.style.display = 'none';
+    suggestPanel.style.display="none";
+    errTip.innerText = "";
+}
+searchCancel.onclick = closeSearchDialog;
+// 点击遮罩关闭
+searchMask.onclick = function(e){
+    if(e.target === searchMask) closeSearchDialog();
+}
+// 输入监听，实时联想，清空错误提示
+searchInput.oninput = function(){
+    errTip.innerText = "";
+    const kw = this.value;
+    if(!kw.trim()){
+        suggestPanel.style.display="none";
+        return;
+    }
+    const res = getSuggestList(kw);
+    renderSuggest(res);
+}
+// 执行搜索：先判断有没有匹配，无匹配弹窗提示
+function doSearch(){
+    let keyword = searchInput.value.trim();
+    errTip.innerText = "";
+    if(keyword === ""){
+        errTip.innerText = "请输入搜索内容";
+        return;
+    }
+    const res = getSuggestList(keyword);
+    if(res.length === 0){
+        errTip.innerText = "未找到相关诗词、作者或朝代，请更换关键词重试";
+        return;
+    }
+    location.href = `翰墨诗库.html?key=${encodeURIComponent(keyword)}`;
+}
+searchConfirm.onclick = doSearch;
+// 回车直接搜索
+searchInput.onkeydown = function(e){
+    errTip.innerText = "";
+    if(e.key === 'Enter') doSearch();
+}
+
+// 读取本地存储的头像
+const avatarImg = document.getElementById('avatarImg');
+const avatarDefault = document.getElementById('avatarDefault');
+const saveAvatar = localStorage.getItem('userAvatar');
+if(saveAvatar){
+    avatarImg.src = saveAvatar;
+    avatarImg.style.display = 'block';
+    avatarDefault.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
