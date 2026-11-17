@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>山河诗卷｜3D环形导航</title>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+/* 视频背景容器 */
+#videoBg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+#videoBg img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+#videoBg .overlay{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(10, 10, 20, 0.35);
+  z-index:1;
+}
+.title{
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  text-align: center;
+  color: #ffdd66;
+  font-size: 60px;
+  letter-spacing: 8px;
+  z-index: 3;
+  pointer-events: none;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  font-family: "KaiTi", "STKaiti", SimSun, serif;
+}
+</style>
+</head>
+<body>
+<!-- 图片背景 -->
+<div id="videoBg">
+    <img src="12.jpg" alt="背景图">
+    <div class="overlay"></div>
+</div>
+<div id="container">
+  <div class="title">山河诗卷</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+const container = document.getElementById('container');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 18;
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+// 灯光，增强卷轴立体感
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+scene.add(ambientLight);
+const dirLight = new THREE.DirectionalLight(0xfff2cc, 1.2);
+dirLight.position.set(8, 8, 12);
+scene.add(dirLight);
+const backLight = new THREE.DirectionalLight(0xffdd88, 0.6);
+backLight.position.set(-6, 4, -8);
+scene.add(backLight);
+const pointLight = new THREE.PointLight(0xffdd88, 0.8, 50);
+pointLight.position.set(0, 2, 8);
+scene.add(pointLight);
+// ========== 6个导航配置 ==========
+const navList = [
+  {
+    name: "首页", url: "首页.html", img: "首页.png",
+  },
+  {
+    name: "诗词沿革", url: "诗词沿革.html", img: "诗词沿革.png",
+  },
+  {
+    name: "诗境寻踪", url: "诗境寻踪.html", img: "诗境寻踪.png",
+  },
+  {
+    name: "ai", url: "AI诗韵工坊.html", img: "诗韵工坊.png",
+  },
+  {
+    name: "本站", url: "关于本站.html", img: "关于本站.png",
+  },
+  {
+    name: "诗库", url: "翰墨诗库.html", img: "翰墨诗库.png",
+  },
+  {
+    name: "诗词闯关", url: "诗词闯关.html", img: "诗词闯关.png",
+  },
+  {
+    name: "学习打卡", url: "学习打卡.html", img: "学习打卡.png",
+  }
+];
+const radius = 10;
+const navGroup = new THREE.Group();
+scene.add(navGroup);
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+const cardGroups = [];
+const textureLoader = new THREE.TextureLoader();
+
+//批量创建卡片组，移除背面画布代码，修复undefined报错
+navList.forEach((item, i) => {
+  const angle = (i / navList.length) * Math.PI * 2;
+  const geo = new THREE.PlaneGeometry(4, 2.8);
+  //正面材质，增加加载回调方便调试
+  const frontTex = textureLoader.load(item.img,
+    ()=>{console.log(`✅ ${item.img} 加载成功`)},
+    ()=>{console.error(`❌ ${item.img} 加载失败，请检查文件名和路径`)}
+  );
+  const frontMat = new THREE.MeshStandardMaterial({
+    map: frontTex,
+    side: THREE.FrontSide,
+    transparent: true,
+    alphaTest: 0.01,
+    roughness: 0.45,
+    metalness: 0.15
+  });
+  const frontMesh = new THREE.Mesh(geo, frontMat);
+
+  const cardRoot = new THREE.Group();
+  cardRoot.add(frontMesh);
+  cardRoot.userData = {
+    url: item.url,
+    frontMesh
+  };
+  cardRoot.baseX = radius * Math.cos(angle);
+  cardRoot.baseZ = radius * Math.sin(angle);
+  cardRoot.baseY = 0;
+  cardRoot.position.set(cardRoot.baseX, cardRoot.baseY, cardRoot.baseZ);
+  navGroup.add(cardRoot);
+  cardGroups.push(cardRoot);
+});
+
+// 拖拽旋转变量
+let isDrag = false;
+let prevX = 0;
+let targetRotationY = 0;
+const autoRotateSpeed = 0.002;
+window.addEventListener('mousedown', e => {
+  isDrag = true;
+  prevX = e.clientX;
+});
+window.addEventListener('mouseup', () => {
+  isDrag = false;
+});
+window.addEventListener('mousemove', (e) => {
+  pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects(cardGroups, true);
+  document.body.style.cursor = intersects.length > 0 ? "pointer" : "default";
+  if(isDrag){
+    const dx = e.clientX - prevX;
+    targetRotationY += dx * 0.005;
+    prevX = e.clientX;
+  }
+});
+
+// 点击卡片直接跳转
+window.addEventListener('click', () => {
+  raycaster.setFromCamera(pointer, camera);
+  const intersects = raycaster.intersectObjects(cardGroups, true);
+  if(intersects.length > 0){
+    const hitCard = intersects[0].object.parent;
+    const ud = hitCard.userData;
+    window.location.href = ud.url;
+  }
+});
+
+// 窗口自适应
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+// 动画循环
+const clock = new THREE.Clock();
+function animate(){
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  if(!isDrag){
+    targetRotationY += autoRotateSpeed;
+  }
+  // 整体圆环平滑旋转
+  navGroup.rotation.y += (targetRotationY - navGroup.rotation.y) * 0.04;
+  cardGroups.forEach((card, i) => {
+    const ud = card.userData;
+    const vec = new THREE.Vector3();
+    card.getWorldPosition(vec);
+    vec.project(camera);
+    const factor = 1 - Math.abs(vec.x);
+    const scale = 0.7 + factor * 0.45;
+    card.scale.set(scale, scale, scale);
+    //上下浮动
+    card.position.y = card.baseY + Math.sin((t + i * 0.8) * 0.6) * 0.3;
+    card.lookAt(camera.position);
+  });
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+<script>
+if(localStorage.getItem("isLogin") !== "yes"){
+    location.href = "login.html";
+}
+function logout(){
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("loginName");
+    location.href="login.html";
+}
+</script>
+</body>
+</html>
